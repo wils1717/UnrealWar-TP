@@ -237,9 +237,20 @@ function compareWar(player, comp) {
 //function to check if either player is out of cards (being a win for the other player)
 function checkWin() {
 	//if player is out of cards, computer wins
-	if (playerHand.length == 0) {
+	if (playerHand.length === 0) {
 		alert("Computer wins. :(");
-
+//            var loss = -1;
+//        $.ajax({
+//                    type: "POST",
+//                    url: "http://localhost/leaderboard.php",
+//                    data: {score: loss},
+//                    dataType: 'json',
+//                    success: function(response){
+//                        console.log(response);
+//                        $('#result').html('The score returned by the server is: ' +response.scoreDouble)
+//                    }
+//                    
+//                })
 		//resets the card and deck image to make it seem like the player is out of cards
 		$('.playerCard').html("");
 		$('.playerDeck').html("");
@@ -249,7 +260,7 @@ function checkWin() {
 	}
 
 	//if computer is out of cards, player wins
-	else if (compHand.length == 0) {
+	else if (compHand.length === 0) {
 		alert("Player wins!! :D");
 
 		//resets the card and deck image to make it seem like the computer is out of cards.
