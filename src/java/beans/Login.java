@@ -62,12 +62,12 @@ private User currentUser;
          && passhash.equals(u.getPasshash())) {
         loggedIn = true;
         currentUser = u;
-        return "index";
+        return "game";
         }
     }
     currentUser = null;
         loggedIn = false;
-        return "index";
+        return "loginPage";
     }
     
 }

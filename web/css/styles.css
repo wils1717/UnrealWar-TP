@@ -83,28 +83,6 @@
     -webkit-border-radius:0;
 }
 
-/* button.btn { 
-  color: black;
-  background-color:white;
-  border-color: black;
-}
-
-button.btn:hover {
-  background-color: #48d32c; 
-  border-color: #48d32c;
-}
-button.btn:active, 
-button.btn:target {
-  
-  background-color:#48d32c; 
-  border-color:#48d32c;
-}
-
-button.btn:hover {
-  background-color: #48d32c; 
-  border-color: #48d32c;
-}*/
-
 form {
 	width:500px;
 	margin:50px auto;
@@ -124,3 +102,4 @@ body {
 	padding-top: 30px;
 	background-color:#200a11;
 }
+
