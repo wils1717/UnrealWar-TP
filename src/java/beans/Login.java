@@ -27,7 +27,16 @@ private User currentUser;
         loggedIn = false;
         currentUser = null;
     }
-
+    public String doLogin(String username, String password) {
+        String retVal = null;
+        if (username.equals("")) {
+            retVal = "ERROR: Invalid Username";
+        } else if (password.equals("")) {
+            retVal = "ERROR: Invalid Password";
+        }
+        return retVal;
+    }
+    
     public String getUsername() {
         return username;
     }
