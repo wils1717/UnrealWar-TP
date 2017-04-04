@@ -71,12 +71,12 @@ private User currentUser;
          && passhash.equals(u.getPasshash())) {
         loggedIn = true;
         currentUser = u;
-        return "game";
+        return "game.xhtml";
         }
     }
     currentUser = null;
         loggedIn = false;
-        return "loginPage";
+        return "loginPage.xhtml";
     }
     
 }

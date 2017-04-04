@@ -30,10 +30,10 @@
                                 <h:form>
                                     <p>Username: <h:inputText value="#{login.username}"/></p>
                                     <p>Password: <h:inputSecret value="#{login.password}"/></p>
-                                    <h:commandButton value="Login" type="button"  class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}"/>
-                                    <h:commandButton value="Register" type="button"  class="btn btn-lg raised" style="font-size:24px" action="#{users.addUser(login.username, login.password)}"/>
+                                    <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}"/>
+                                    <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{users.addUser(login.username, login.password)}"/>
                                     <c:if test="#{login.loggedIn}">
-                                        <h:button value="Enter Game" outcome="game"/>
+                                        <h:button value="Enter Game" outcome="game.xhtml"/>
                                     </c:if>
                                 </h:form>
                             </div>
