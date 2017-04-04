@@ -13,10 +13,6 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
-/**
- * SORRY MARK IS A NOOB
- * @author c0121833
- */
 @Named
 @ApplicationScoped
 public class Users {
