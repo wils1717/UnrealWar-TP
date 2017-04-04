@@ -2,15 +2,166 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Login Page</title>
-    </h:head>
-    <h:body>
-        <h:form>
-            <p>Username: <h:inputText value="#{login.username}"/></p>
-            <p>Password: <h:inputSecret value="#{login.password}"/></p>
-            <h:commandButton value="Login" action="#{login.login()}"/>
-        </h:form>
-    </h:body>
-</html>
+                        <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <!-- Bootstrap -->
+                <link rel="stylesheet" href="css/bootstrap.css"/>
+                    <link href="https://fonts.googleapis.com/css?family=Creepster|VT323" rel="stylesheet"/>
+                            <title>Login Page</title>
+                        </h:head>
+                        <h:body>
+                            <div>
+                                <style>
+                                    /* Bordered form */
+
+                                    body {
+                                        padding-top: 30px;
+                                        background: url("img/splatterBack.jpg");
+                                        background-size: cover;
+                                    }
+                                    /* Full-width inputs */
+                                    input[type=text], input[type=password] {
+                                        width: 100%;
+                                        padding: 12px 20px;
+                                        margin: 8px 0;
+                                        display: inline-block;
+                                        border: 1px solid #ccc;
+                                        box-sizing: border-box;
+                                    }
+
+                                    /* Set a style for all buttons */
+                                    button {
+                                        background-color: #860509;
+                                        color: white;
+                                        padding: 14px 20px;
+                                        margin: 13px;
+                                        border: none;
+                                        cursor: pointer;
+                                        width: 100%;
+                                        font-family: 'VT323', monospace;
+                                    }
+
+                                    .btn.raised {
+                                        box-shadow: 3px 3px 3px 3px #3D0305;
+
+
+                                    }
+
+                                    .btn.raised:hover, .btn.raised.hover {
+                                        color: white;
+                                    }
+
+
+
+                                    .btn.raised:active, .btn.raised.active{
+                                        box-shadow: none;
+
+                                    }
+
+                                    #app {
+                                        background-color: #860509;
+
+                                    }
+                                    .fa-android {
+                                        color: #48d32c; 
+                                    }
+                                    /* Extra style for the cancel button (red) */
+                                    .cancelbtn {
+                                        width: auto;
+                                        padding: 10px 18px;
+                                        background-color: #f44336;
+                                    }
+
+                                    /* Center the avatar image inside this container */
+                                    .imgcontainer {
+                                        text-align: center;
+                                        margin: 24px 0 12px 0;
+                                    }
+
+                                    .panel {
+                                        background-color: white;
+                                        opacity: 0.75;
+                                        color: #860509;
+                                        font-family: 'VT323', monospace;
+                                        font-size: 28px;
+                                    }
+                                    .foot {
+                                        font-family: 'VT323', monospace;
+                                        font-size: 14px;
+                                    }
+
+                                    /* Avatar image */
+                                    img.avatar {
+                                        width: 40%;
+                                        border-radius: 50%;
+                                    }
+
+                                    /* Add padding to containers */
+                                    .container {
+                                        padding: 16px;
+                                    }
+
+                                    /* The "Forgot password" text */
+                                    span.psw {
+                                        float: right;
+                                        padding-top: 16px;
+                                    }
+
+                                    <!-- /* Change styles for span and cancel button on extra small screens */
+                                    @media screen and (max-width: 300px) {
+                                        span.psw {
+                                            display: block;
+                                            float: none;
+                                        }
+                                        .cancelbtn {
+                                            width: 100%;
+                                        } -->
+
+                                    }
+                                </style>
+
+                                <form action="/action_page.php">
+                                    <div class="container panel panel-default">
+                                        <div class="row">
+                                            <div class="forum-group col-lg-8 col-lg-offset-2">
+
+
+                                                <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
+                                                <div class="form-group">
+                                                    <h:form>
+                                                        <p>Username: <h:inputText value="#{login.username}"/></p>
+                                                        <p>Password: <h:inputSecret value="#{login.password}"/></p>
+                                                        <h:commandButton value="Login" action="#{login.login()}"/>
+                                                    </h:form>
+                                                </div>
+                                                <div class="form-group">
+                                                    <a href="game.html"><button type="button" class="btn btn-lg raised" style="font-size:24px">Login <i class=""></i></button></a>
+
+                                                    <a href="download.html"><button id="app" type="button"  class="btn btn-lg raised" style="font-size:24px">Register <i class=""></i></button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <footer id="foot" class="text-center">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <p class=""> Copyright © Unreal War. All rights reserved.</p>
+                                        </div>
+                                    </div>
+
+                                    <script src="js/bootstrap.min.js"></script>
+                                </footer>
+                            </div> 
+                            
+                        </h:body>
+                        </html>
 
