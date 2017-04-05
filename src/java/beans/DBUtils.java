@@ -49,14 +49,6 @@ public class DBUtils {
     }
 
     /**
-     * Establishes a connection with the database
-     *
-     * @return the database connection
-     * @throws SQLException
-     */
-
-
-    /**
      * Utility method used to create a Database Connection
      *
      * @return the Connection object

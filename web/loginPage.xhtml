@@ -31,7 +31,7 @@
                                     <p>Username: <h:inputText value="#{login.username}"/></p>
                                     <p>Password: <h:inputSecret value="#{login.password}"/></p>
                                     <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}"/>
-                                    <h:button value="Register" class="btn btn-lg raised" style="font-size:24px" outcome="RegistrationPage"/>
+                                    <h:button value="Register" class="btn btn-lg raised" style="font-size:24px" outcome="registrationPage"/>
                                     <c:if test="#{login.loggedIn}">
                                         <h:button value="Enter Game" outcome="game.xhtml"/>
                                     </c:if>
