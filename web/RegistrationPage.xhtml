@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/bootstrap.css"/>
         <link rel="stylesheet" href="css/loginStyles.css"/>
         <link href="https://fonts.googleapis.com/css?family=Creepster|VT323" rel="stylesheet"/>
-        <title>Login Page</title>
+        <title>Registration Page</title>
     </h:head>
     <h:body>
         <div>
@@ -28,13 +28,10 @@
                         <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                             <div class="form-group">
                                 <h:form>
-                                    <p>Username: <h:inputText value="#{login.username}"/></p>
-                                    <p>Password: <h:inputSecret value="#{login.password}"/></p>
-                                    <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}"/>
-                                    <h:button value="Register" class="btn btn-lg raised" style="font-size:24px" outcome="RegistrationPage"/>
-                                    <c:if test="#{login.loggedIn}">
-                                        <h:button value="Enter Game" outcome="game.xhtml"/>
-                                    </c:if>
+                                    <p>Please enter your desired username: <h:inputText value="#{username}"/></p>
+                                    <p>Enter a password: <h:inputSecret value="#{password}"/></p>
+                                    <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{users.addUser(username, password)}"/>
+                                    <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                                 </h:form>
                             </div>
                         </div>
