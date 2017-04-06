@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/bootstrap.css"/>
         <link rel="stylesheet" href="css/loginStyles.css"/>
         <link href="https://fonts.googleapis.com/css?family=Creepster|VT323" rel="stylesheet"/>
-        <title>Registration Page</title>
+        <title>Delete User Page</title>
     </h:head>
     <h:body>
         <div>
@@ -28,9 +28,10 @@
                         <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                             <div class="form-group">
                                 <h:form>
-                                    <p>Please enter your desired username: <h:inputText value="#{registration.username}"/></p>
-                                    <p>Enter a password: <h:inputSecret value="#{registration.password}"/></p>
-                                    <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{registration.addUser()}"/>
+                                    <p> Delete Account</p>
+                                    <p>Please enter your username: <h:inputText value="#{registration.username}"/></p>
+                                    <p>Confirm your password: <h:inputSecret value="#{registration.password}"/></p>
+                                    <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{registration.deleteUser(registration.username, registration.password)}"/>
                                     <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                                 </h:form>
                             </div>

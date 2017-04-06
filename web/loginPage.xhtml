@@ -14,40 +14,41 @@
         <title>Login Page</title>
     </h:head>
     <h:body>
-            <form>
-                <div class="container panel panel-default">
-                    <div class="row">
-                        <div class="forum-group col-lg-8 col-lg-offset-2">
-
-
-                            <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
-                            <div class="form-group">
-                                <h:form>
-                                    <p>Username: <h:inputText value="#{login.username}"/></p>
-                                    <p>Password: <h:inputSecret value="#{login.password}"/></p>
-                                    <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}"/>
-                                    <h:button value="Register" class="btn btn-lg raised" style="font-size:24px" outcome="registrationPage"/>
-                                </h:form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <footer id="foot" class="text-center">
-
+        <form>
+            <div class="container panel panel-default">
                 <div class="row">
-                    <div class="col-xs-12">
-                        <p class=""> Copyright © Unreal War. All rights reserved.</p>
+                    <div class="forum-group col-lg-8 col-lg-offset-2">
+
+
+                        <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
                     </div>
                 </div>
+                <div class="row">
+                    <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
+                        <div class="form-group">
+                            <h:form>
+                                <p>Username: <h:inputText value="#{login.username}"/></p>
+                                <p>Password: <h:inputSecret value="#{login.password}"/></p>
+                                <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}"/>
+                                <h:button value="Register" class="btn btn-lg raised" style="font-size:24px" outcome="registrationPage"/>
+                                <h:button value="Delete Your account" class="btn btn-lg raised" style="font-size:24px" outcome="deleteUserPage"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-                <script src="js/bootstrap.min.js"></script>
-            </footer>
+        <footer id="foot" class="text-center">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class=""> Copyright © Unreal War. All rights reserved.</p>
+                </div>
+            </div>
+
+            <script src="js/bootstrap.min.js"></script>
+        </footer>
     </h:body>
 </html>
 

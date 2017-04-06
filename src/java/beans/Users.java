@@ -19,6 +19,7 @@ public class Users {
 
     private List<User> users;
     private static Users instance = new Users();
+    
 
     /**
      * No-arg constructor -- retrieves List from DB and sets up singleton
@@ -83,6 +84,8 @@ public class Users {
         return null;
     }
 
+
+    
     /**
      * Retrieve a specific user ID by username
      *
@@ -98,4 +101,5 @@ public class Users {
         return -1;
     }
 
+   
 }

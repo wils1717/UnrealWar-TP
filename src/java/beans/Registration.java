@@ -5,106 +5,55 @@
  */
 package beans;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 import java.sql.*;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+ 
 @Named
-@ApplicationScoped
-public class Registration {
+@SessionScoped
+public class Registration implements Serializable {
+private String username;
+private String password;
+private int id;
+Random ran = new Random();
 
-    private List<User> users;
-    private User instance = new User();
 
-    /**
-     * No-arg constructor -- retrieves List from DB and sets up singleton
-     */
+
+
     public Registration() {
-        getUsersFromDB();
-        instance = new User(0, "", "");
+        username = null;
+        password = null;
+        id = 0;
+
     }
 
-    /**
-     * Retrieve the List of Users from the DB
-     */
-    private void getUsersFromDB() {
-        try (Connection conn = DBUtils.getConnection()) {
-            users.clear();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-            while (rs.next()) {
-                User u = new User();
-                u.setId(rs.getInt("id"));
-                u.setUsername(rs.getString("username"));
-                u.setPasshash(rs.getString("passhash"));
-                users.add(u);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
-            // This Fails Silently -- Sets User List as Empty
-            users = new ArrayList<>();
-        }
+   public String getUsername() {
+        return username;
     }
 
-    /**
-     * Retrieve the List of User objects
-     *
-     * @return the List of User objects
-     */
-    public List<User> getUsers() {
-        return users;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    /**
-     * Set the Product Model used in Forms
-     *
-     * @param instance the Product Model used in Forms
-     */
-    public void setInstance(User instance) {
-        this.instance = instance;
+    public String getPassword() {
+        return password;
     }
 
-    /**
-     * Retrieve the known instance of this class
-     *
-     * @return the known instance of this class
-     */
-    public User getInstance() {
-        return instance;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+     public int getId() {
+        return id;
     }
 
-    /**
-     * Retrieve a specific username by ID
-     *
-     * @param id the ID to search for
-     * @return the username
-     */
-    public String getUsernameById(int id) {
-        for (User u : users) {
-            if (u.getId() == id) {
-                return u.getUsername();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Retrieve a specific user ID by username
-     *
-     * @param username the username to search for
-     * @return the user ID
-     */
-    public int getUserIdByUsername(String username) {
-        for (User u : users) {
-            if (u.getUsername().equals(username)) {
-                return u.getId();
-            }
-        }
-        return -1;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -115,21 +64,22 @@ public class Registration {
      */
     public void addUser() {
         try (Connection conn = DBUtils.getConnection()) {
-            String passhash = DBUtils.hash(instance.getPasshash());
+            String passhash = DBUtils.hash(password);
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO users VALUES (" + instance.getId() + ",'" + instance.getUsername() + "','" + passhash + "')");
+            id = ran.nextInt(2000000000);
+            stmt.executeUpdate("INSERT INTO users VALUES (" + id + ",'" + username + "','" + passhash + "')");
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
-        getUsersFromDB();
+        
     }
 
-    public String deleteUser(String username) {
+    public String deleteUser(String username, String password) {
         try {
+            String passhash = DBUtils.hash(password);
             Connection conn = DBUtils.getConnection();
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM users WHERE username = " + username);
-            getUsersFromDB();
+            stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "' AND passhash = '" + passhash + "'");
             return "loginPage";
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);

@@ -7,9 +7,9 @@ package beans;
 
 public class User {
 
-    private int id;
-    private String username;
-    private String passhash;
+    public int id;
+    public String username;
+    public String passhash;
 
     public User(int id, String username, String passhash) {
         this.id = id;
