@@ -64,7 +64,7 @@ private User currentUser;
     public String login() {
     String passhash = DBUtils.hash(password);
     
-    for (User u : Users.getInstance().getUsers()) {
+    for (User u : UserController.getInstance().getUsers()) {
         System.out.println(u.getPasshash() + " " + passhash);
         if(username.equals(u.getUsername()) 
          && passhash.equals(u.getPasshash())) {
