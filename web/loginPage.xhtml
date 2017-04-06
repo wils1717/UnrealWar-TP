@@ -29,7 +29,7 @@
                             <h:form>
                                 <p>Username: <h:inputText value="#{login.username}"/></p>
                                 <p>Password: <h:inputSecret value="#{login.password}"/></p>
-                                <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}"/>
+                                <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}" />
                                 <h:button value="Register" class="btn btn-lg raised" style="font-size:24px" outcome="registrationPage"/>
                                 <h:button value="Delete Your account" class="btn btn-lg raised" style="font-size:24px" outcome="deleteUserPage"/>
                             </h:form>

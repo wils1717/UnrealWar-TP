@@ -11,35 +11,47 @@
         <link rel="stylesheet" href="css/bootstrap.css"/>
         <link rel="stylesheet" href="css/loginStyles.css"/>
         <link href="https://fonts.googleapis.com/css?family=Creepster|VT323" rel="stylesheet"/>
+        <style>            
+            body {background: url("img/splatterBack.jpg"); background-size: cover; text-align: center; margin: 0; font-family: 'Permanent Marker', cursive; color: #fff;}
+        </style>
         <title>Delete User Page</title>
     </h:head>
     <h:body>
-        <div>
-            <form>
-                <div class="container panel panel-default">
-                    <div class="row">
-                        <div class="forum-group col-lg-8 col-lg-offset-2">
+        <c:if test="#{registration.deleted}">
+            <h1>Unreal War</h1><br></br>
+            <h3>We are sorry to see you go</h3>
+            <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+            <h:button value="Register back up" class="btn btn-lg raised" style="font-size:24px" outcome="registrationPage"/>
+        </c:if>
+        <c:if test="#{!registration.deleted}">
+            <div>
+                <form>
+                    <div class="container panel panel-default">
+                        <div class="row">
+                            <div class="forum-group col-lg-8 col-lg-offset-2">
 
 
-                            <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
+                                <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
-                            <div class="form-group">
-                                <h:form>
-                                    <p> Delete Account</p>
-                                    <p>Please enter your username: <h:inputText value="#{registration.username}"/></p>
-                                    <p>Confirm your password: <h:inputSecret value="#{registration.password}"/></p>
-                                    <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{registration.deleteUser(registration.username, registration.password)}"/>
-                                    <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
-                                </h:form>
+                        <div class="row">
+                            <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
+                                <div class="form-group">
+                                    <h:form>
+                                        <p> Delete Account</p>
+                                        <p>Please enter your username: <h:inputText value="#{registration.username}"/></p>
+                                        <p>Confirm your password: <h:inputSecret value="#{registration.password}"/></p>
+                                        <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{registration.deleteUser(registration.username, registration.password)}"/>
+                                        <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+                                    </h:form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-
+                </form>
+            </div>
+        </c:if>
+        <div>
             <footer id="foot" class="text-center">
 
                 <div class="row">

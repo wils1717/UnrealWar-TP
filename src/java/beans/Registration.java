@@ -13,26 +13,26 @@ import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
- 
 @Named
 @SessionScoped
 public class Registration implements Serializable {
-private String username;
-private String password;
-private int id;
-Random ran = new Random();
 
-
-
+    private String username;
+    private String password;
+    private int id;
+    private boolean registered;
+    private boolean deleted;
+    Random ran = new Random();
 
     public Registration() {
         username = null;
         password = null;
         id = 0;
-
+        registered = false;
+        deleted = false;
     }
 
-   public String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -47,13 +47,21 @@ Random ran = new Random();
     public void setPassword(String password) {
         this.password = password;
     }
-    
-     public int getId() {
+
+    public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 
     /**
@@ -68,22 +76,21 @@ Random ran = new Random();
             Statement stmt = conn.createStatement();
             id = ran.nextInt(2000000000);
             stmt.executeUpdate("INSERT INTO users VALUES (" + id + ",'" + username + "','" + passhash + "')");
+            registered = true;
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
-    public String deleteUser(String username, String password) {
+    public void deleteUser(String username, String password) {
         try {
             String passhash = DBUtils.hash(password);
             Connection conn = DBUtils.getConnection();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "' AND passhash = '" + passhash + "'");
-            return "loginPage";
+            deleted = true;
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "loginPage";
     }
 }
