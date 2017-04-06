@@ -242,7 +242,7 @@ function checkWin() {
 //            var loss = -1;
 //        $.ajax({
 //                    type: "POST",
-//                    url: "http://localhost/leaderboard.php",
+//                    url: "/leaderboard.php",
 //                    data: {score: loss},
 //                    dataType: 'json',
 //                    success: function(response){
