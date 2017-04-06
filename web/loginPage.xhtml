@@ -15,15 +15,10 @@
         <title>Login Page</title>
     </h:head>
     <h:body>
-
-
         <div class="container panel panel-default">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-
-
                     <img  id="logo" class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
-
                 </div>
             </div>
             <div class="row">
@@ -33,37 +28,26 @@
                             <p>Username: <h:inputText value="#{login.username}"/></p>
                             <p>Password: <h:inputSecret value="#{login.password}"/></p>
                             <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}" />
-
                             <div class="divider" />
                             <h:button value="Register" class="btn btn-lg raised" style="font-size:24px" outcome="registrationPage"/>
                             <div class="divider" />
-
                             <h:button value="Delete Your account" class="btn btn-lg raised" style="font-size:24px" outcome="deleteUserPage"/>
+                            <div class="divider" />
+                            <h:button value="View Leaderboards" class="btn btn-lg raised" style="font-size:24px" outcome="leaderboardsPage"/>
                         </h:form>
                     </div>
                 </div>
             </div>
-
-
-
-
-
             <footer  class="text-center">
-
                 <div class="panel-footer row">
                     <div class="col-xs-12">
                         <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
                     </div>
                 </div>
-
                 <script src="js/jquery-3.2.0.min.js" type="text/javascript"></script>
                 <script src="js/bootstrap.min.js"></script>
-              
-
             </footer>
-
         </div>
-
     </h:body>
 </html>
 

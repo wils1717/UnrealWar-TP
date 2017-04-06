@@ -85,8 +85,6 @@ public class UserController {
         }
         return null;
     }
-
-
     
     /**
      * Retrieve a specific user ID by username
@@ -101,7 +99,5 @@ public class UserController {
             }
         }
         return -1;
-    }
-
-   
+    } 
 }

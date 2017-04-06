@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -26,8 +25,6 @@
             </h:form>
         </c:if>
         <c:if test="#{!registration.registered}">
-
-
             <div class="container panel panel-default">
                 <div class="row">
                     <div class="forum-group col-lg-8 col-lg-offset-2">
@@ -42,33 +39,19 @@
                                 <p>Enter a password: <h:inputSecret value="#{registration.password}"/></p>
                                 <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{registration.addUser()}"/>
                                 <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
-
-
-
-
-
                             </h:form>
                         </div>
                     </div>
                 </div>
-
-
-
-
                 <footer  class="text-center">
-
                     <div class="panel-footer row">
                         <div class="col-xs-12">
                             <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
                         </div>
                     </div>
-
                     <script src="js/jquery-3.2.0.min.js" type="text/javascript"></script>
                     <script src="js/bootstrap.min.js"></script>
-
-
                 </footer>
-
             </div></c:if>
     </h:body>
 </html>
