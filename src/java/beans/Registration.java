@@ -20,6 +20,8 @@ public class Registration implements Serializable {
     private String username;
     private String password;
     private int id;
+    private int loses;
+    private int wins;
     private boolean registered;
     private boolean deleted;
     Random ran = new Random();
@@ -28,8 +30,35 @@ public class Registration implements Serializable {
         username = null;
         password = null;
         id = 0;
+        wins = 0;
+        loses = 0;
         registered = false;
         deleted = false;
+    }
+
+    public String clearFields() {
+        username = null;
+        password = null;
+        id = 0;
+        registered = false;
+        deleted = false;
+        return "loginPage";
+    }
+
+    public int getLoses() {
+        return loses;
+    }
+
+    public void setLoses(int loses) {
+        this.loses = loses;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
     }
 
     public String getUsername() {
@@ -75,7 +104,7 @@ public class Registration implements Serializable {
             String passhash = DBUtils.hash(password);
             Statement stmt = conn.createStatement();
             id = ran.nextInt(2000000000);
-            stmt.executeUpdate("INSERT INTO users VALUES (" + id + ",'" + username + "','" + passhash + "')");
+            stmt.executeUpdate("INSERT INTO users VALUES (" + id + ",'" + username + "','" + passhash + "', " + wins + ", " + loses + ")");
             registered = true;
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);

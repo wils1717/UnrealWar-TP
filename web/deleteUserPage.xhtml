@@ -20,8 +20,9 @@
         <c:if test="#{registration.deleted}">
             <h1>Unreal War</h1><br></br>
             <h3>We are sorry to see you go</h3>
-            <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
-            <h:button value="Register back up" class="btn btn-lg raised" style="font-size:24px" outcome="registrationPage"/>
+            <h:form>
+                <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{registration.clearFields()}"/>
+            </h:form>
         </c:if>
         <c:if test="#{!registration.deleted}">
             <div>
@@ -42,7 +43,6 @@
                                         <p>Please enter your username: <h:inputText value="#{registration.username}"/></p>
                                         <p>Confirm your password: <h:inputSecret value="#{registration.password}"/></p>
                                         <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{registration.deleteUser(registration.username, registration.password)}"/>
-                                        <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                                     </h:form>
                                 </div>
                             </div>

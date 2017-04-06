@@ -10,15 +10,34 @@ public class User {
     public int id;
     public String username;
     public String passhash;
+    public int wins;
+    public int loses;
 
-    public User(int id, String username, String passhash) {
+    public User(int id, String username, String passhash, int wins, int loses) {
         this.id = id;
         this.username = username;
         this.passhash = passhash;
+        this.wins = wins;
+        this.loses = loses;
     }
 
     User() {
- 
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getLoses() {
+        return loses;
+    }
+
+    public void setLoses(int loses) {
+        this.loses = loses;
     }
 
     public int getId() {

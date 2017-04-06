@@ -21,7 +21,9 @@
         <c:if test="#{registration.registered}">
             <h1>Unreal War!</h1><br></br>
             <h3>Thanks for registering!</h3>
-            <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+            <h:form>
+                <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{registration.clearFields()}"/>
+            </h:form>
         </c:if>
         <c:if test="#{!registration.registered}">
             <div>

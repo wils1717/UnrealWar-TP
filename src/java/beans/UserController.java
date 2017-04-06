@@ -15,21 +15,21 @@ import javax.inject.Named;
 
 @Named
 @ApplicationScoped
-public class Users {
+public class UserController {
 
     private List<User> users;
-    private static Users instance = new Users();
+    private static UserController instance = new UserController();
     
 
     /**
      * No-arg constructor -- retrieves List from DB and sets up singleton
      */
-    public Users() {
+    public UserController() {
         getUsersFromDB();
     }
 
     /**
-     * Retrieve the List of Users from the DB
+     * Retrieve the List of UserController from the DB
      */
     private void getUsersFromDB() {
         try (Connection conn = DBUtils.getConnection()) {
@@ -40,12 +40,14 @@ public class Users {
                 User u = new User(
                         rs.getInt("id"),
                         rs.getString("username"),
-                        rs.getString("passhash")
+                        rs.getString("passhash"),
+                        rs.getInt("wins"),
+                        rs.getInt("loses")
                 );
                 users.add(u);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             // This Fails Silently -- Sets User List as Empty
             users = new ArrayList<>();
         }
@@ -65,7 +67,7 @@ public class Users {
      *
      * @return the known instance of this class
      */
-    public static Users getInstance() {
+    public static UserController getInstance() {
         return instance;
     }
 

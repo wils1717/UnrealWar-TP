@@ -28,9 +28,14 @@
                         <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                             <div class="form-group">
                                 <h:form>
-                                    <p>Please enter your desired username: <h:inputText value="#{username}"/></p>
-                                    <p>Enter a password: <h:inputSecret value="#{password}"/></p>
-                                    <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{users.addUser(username, password)}"/>
+                                    <h:dataTable value="#{userController.users}" var="post">
+                                        <h:column>
+                                            #{users.username}
+                                        </h:column>
+                                        <h:column>
+                                            #{post.createdTime.toLocaleString()}
+                                        </h:column>
+                                    </h:dataTable>
                                     <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                                 </h:form>
                             </div>
