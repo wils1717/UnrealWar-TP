@@ -9,10 +9,7 @@ import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 
-/**
- *
- * @author c0665354
- */
+
 @Named
 @SessionScoped
 public class Login implements Serializable {
@@ -27,6 +24,7 @@ private User currentUser;
         loggedIn = false;
         currentUser = null;
     }
+    
     public String doLogin(String username, String password) {
         String retVal = null;
         if (username.equals("")) {
@@ -34,6 +32,7 @@ private User currentUser;
         } else if (password.equals("")) {
             retVal = "ERROR: Invalid Password";
         }
+        System.out.println(retVal);
         return retVal;
     }
     

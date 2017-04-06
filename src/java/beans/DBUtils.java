@@ -12,11 +12,6 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/**
- * SORRY MARK IS A NOOB
- * @author c0121833
- */
 public class DBUtils {
     
     private final static String studentNumber = "c0533886";
