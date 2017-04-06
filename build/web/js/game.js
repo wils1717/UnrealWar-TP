@@ -244,14 +244,14 @@ function checkWin() {
         $.ajax({
             type: "POST",
             url: "/UnrealWar-TP/api/leaderboard",
-            data: {score: loses},
+            data: JSON.stringify({score: loses}),
             dataType: 'json',
             success: function (response) {
                 console.log(response);
-                $('#result').html('The score returned by the server is: ' + response.takeScore)
+                $('#result').html('The score returned by the server is: ' + response.takeScore);
             }
 
-        })
+        });
         //resets the card and deck image to make it seem like the player is out of cards
         $('.playerCard').html("");
         $('.playerDeck').html("");
@@ -267,14 +267,14 @@ function checkWin() {
         $.ajax({
             type: "POST",
             url: "/UnrealWar-TP/api/leaderboard",
-            data: {score: wins},
+            data: JSON.stringify({score: wins}),
             dataType: 'json',
             success: function (response) {
                 console.log(response);
-                $('#result').html('The score returned by the server is: ' + response.takeScore)
+                $('#result').html('The score returned by the server is: ' + response.takeScore);
             }
 
-        })
+        });
         //resets the card and deck image to make it seem like the computer is out of cards.
         $('.compHand').html("");
         $('.compDeck').html("");
