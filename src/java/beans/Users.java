@@ -98,23 +98,4 @@ public class Users {
         return -1;
     }
 
-    /**
-     * Add a user to the DB
-     *
-     * @param username the username
-     * @param password the password
-     */
-    public void addUser(String username, String password) {
-        try (Connection conn = DBUtils.getConnection()) {
-            String passhash = DBUtils.hash(password);
-            String sql = "INSERT INTO users (username, passhash) VALUES(?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            pstmt.setString(2, passhash);
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        getUsersFromDB();
-    }
 }

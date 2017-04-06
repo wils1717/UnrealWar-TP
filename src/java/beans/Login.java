@@ -63,20 +63,20 @@ private User currentUser;
     }
     
     public String login() {
-    String passhash = DBUtils.hash(password);
+    //String passhash = DBUtils.hash(password);
     
     for (User u : Users.getInstance().getUsers()) {
-        System.out.println(u.getPasshash() + " " + passhash);
+        System.out.println(u.getPasshash()); //+ " " + passhash);
         if(username.equals(u.getUsername()) 
-         && passhash.equals(u.getPasshash())) {
+         && password.equals(u.getPasshash())) { //passhash.equals(u.getPasshash()))
         loggedIn = true;
         currentUser = u;
-        return "game.xhtml";
+        return "game";
         }
     }
     currentUser = null;
         loggedIn = false;
-        return "loginPage.xhtml";
+        return "loginPage";
     }
     
 }

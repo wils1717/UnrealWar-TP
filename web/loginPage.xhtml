@@ -14,8 +14,7 @@
         <title>Login Page</title>
     </h:head>
     <h:body>
-        <div>
-            <form action="/action_page.php">
+            <form>
                 <div class="container panel panel-default">
                     <div class="row">
                         <div class="forum-group col-lg-8 col-lg-offset-2">
@@ -32,9 +31,6 @@
                                     <p>Password: <h:inputSecret value="#{login.password}"/></p>
                                     <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px" action="#{login.login()}"/>
                                     <h:button value="Register" class="btn btn-lg raised" style="font-size:24px" outcome="registrationPage"/>
-                                    <c:if test="#{login.loggedIn}">
-                                        <h:button value="Enter Game" outcome="game.xhtml"/>
-                                    </c:if>
                                 </h:form>
                             </div>
                         </div>
@@ -52,7 +48,6 @@
 
                 <script src="js/bootstrap.min.js"></script>
             </footer>
-        </div> 
     </h:body>
 </html>
 
