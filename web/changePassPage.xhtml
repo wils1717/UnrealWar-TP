@@ -9,36 +9,36 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <!-- Bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css"/>
+
         <link rel="stylesheet" href="css/styles.css"/>
+
         <link href="https://fonts.googleapis.com/css?family=Creepster|VT323" rel="stylesheet"/>
-        <style>            
-            body {background: url("img/splatterBack.jpg"); background-size: cover; text-align: center; margin: 0; font-family: 'Permanent Marker', cursive; color: #fff;}
-        </style>
-        <title>Registration Page</title>
+        <title>Change Password Page</title>
     </h:head>
     <h:body>
-        <c:if test="#{registration.registered}">
+        <c:if test="#{registration.passwordChanged}">
             <h1>Unreal War!</h1><br></br>
-            <h3>Thanks for registering!</h3>
+            <h3>Password Changed</h3>
             <h:form>
                 <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{registration.clearFields()}"/>
             </h:form>
         </c:if>
-        <c:if test="#{!registration.registered}">
+        <c:if test="#{!registration.passwordChanged}">
             <div class="container panel panel-default">
                 <div class="row">
-                    <div class="forum-group col-lg-8 col-lg-offset-2">
-                        <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <img  id="logo" class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
+                    <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                         <div class="form-group">
-                            <h:form>
-                                <p>Please enter your desired username: <h:inputText value="#{registration.username}"/></p>
-                                <p>Enter a password: <h:inputSecret value="#{registration.password}"/></p>
-                                <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{registration.addUser()}"/>
-                                <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+                            <h:form style="inline">
+                                <p>Username: <h:inputText value="#{registration.username}"/></p>
+                                <p>Old Password: <h:inputSecret value="#{registration.oldPassword}"/></p>
+                                <p>New Password: <h:inputSecret value="#{registration.newPassword}"/></p>
+                                <p>Confirm new Password: <h:inputSecret value="#{registration.confirmPassword}"/></p>
+                                <h:commandButton value="Change Password" class="btn btn-lg raised" style="font-size:24px" action="#{registration.editUserPassword(registration.username, registration.oldPassword, registration.newPassword, registration.confirmPassword)}" />
                             </h:form>
                         </div>
                     </div>
