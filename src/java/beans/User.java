@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package beans;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 public class User {
 
@@ -22,6 +21,14 @@ public class User {
     }
 
     User() {
+    }
+    
+    public User(JsonObject json) {        
+        id = json.getInt("id", 0);
+        username = json.getString("username", "");
+        passhash = json.getString("passhash", "");
+        wins = json.getInt("wins", 0);
+        loses = json.getInt("loses", 0);
     }
 
     public int getWins() {
@@ -62,6 +69,16 @@ public class User {
 
     public void setPasshash(String passhash) {
         this.passhash = passhash;
+    }
+    
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
+                .add("id", id)
+                .add("username", username)
+                .add("passhash", passhash)
+                .add("wins", wins)
+                .add("loses", loses)
+                .build();
     }
 
 }
