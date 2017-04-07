@@ -119,14 +119,13 @@ public class LoginTest {
      * Test of login method, of class Login.
      */
     @Test
-    public void testLogin() {
-        System.out.println("login");
+    public void testSuccessfulLogin() {
+        String username = "bob";
+        String password = "password";
         Login instance = new Login();
-        String expResult = "";
-        String result = instance.login();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "SUCCESS: Valid login credentials have been entered";
+        String result = instance.doLogin(username, password);
+        assertEquals(expResult, result);   
     }
     
     
