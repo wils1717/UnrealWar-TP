@@ -25,7 +25,6 @@ public class Registration implements Serializable {
     private boolean registered;
     private boolean deleted;
     private boolean passwordChanged;
-    Random ran = new Random();
     private List<User> users;
     private static User instance = new User();
 
@@ -168,7 +167,7 @@ public class Registration implements Serializable {
                 users.add(u);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
             // This Fails Silently -- Sets User List as Empty
             users = new ArrayList<>();
         }
@@ -177,7 +176,7 @@ public class Registration implements Serializable {
     /**
      * Add a user to the DB
      *
-     * 
+     *
      *
      */
     public void addUser() {
@@ -194,7 +193,7 @@ public class Registration implements Serializable {
                 stmt.executeUpdate("INSERT INTO users VALUES (" + id + ",'" + username + "','" + passhash + "', " + wins + ", " + losses + ")");
                 registered = true;
                 System.out.println(username);
-
+                getUsersFromDB();
             } else {
 
             }

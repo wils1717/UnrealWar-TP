@@ -1,4 +1,3 @@
-
 package beans;
 
 import java.io.Serializable;
@@ -13,17 +12,16 @@ import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 
-
 @Named
 @SessionScoped
 public class Login implements Serializable {
-private String username;
-private String password;
-private boolean loggedIn;
-private User currentUser;
-private List<User> users;
-private static User instance = new User();
 
+    private String username;
+    private String password;
+    private boolean loggedIn;
+    private User currentUser;
+    private List<User> users;
+    private static User instance = new User();
 
     public List<User> getUsers() {
         return users;
@@ -47,14 +45,14 @@ private static User instance = new User();
         loggedIn = false;
         currentUser = null;
     }
-    
+
     public String logout() {
         username = null;
         password = null;
         loggedIn = false;
         return "loginPage";
     }
-    
+
     public String doLogin(String username, String password) {
         String retVal = null;
         if (username.equals("")) {
@@ -65,7 +63,7 @@ private static User instance = new User();
         System.out.println(retVal);
         return retVal;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -86,27 +84,28 @@ private static User instance = new User();
         return loggedIn;
     }
 
-
     public User getCurrentUser() {
         return currentUser;
     }
-    
+
     public String login() {
-    String passhash = DBUtils.hash(password); 
-    for (User u : UserController.getInstance().getUsers()) {
+        String passhash = DBUtils.hash(password);
         getUsersFromDB();
-        if(username.equals(u.getUsername()) 
-         && passhash.equals(u.getPasshash())) {
-        loggedIn = true;
-        currentUser = u;
-        return "game";
+        for (User u : UserController.getInstance().getUsers()) {
+            if (username.equals(u.getUsername())
+                    && passhash.equals(u.getPasshash())) {
+                loggedIn = true;
+                currentUser = u;
+                return "game";
+            }
         }
-    }
-    currentUser = null;
+        getUsersFromDB();
+        currentUser = null;
+        logout();
         loggedIn = false;
         return "loginPage";
     }
-    
+
     public void getUsersFromDB() {
         try (Connection conn = DBUtils.getConnection()) {
             users = new ArrayList<>();
@@ -123,10 +122,10 @@ private static User instance = new User();
                 users.add(u);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             // This Fails Silently -- Sets User List as Empty
             users = new ArrayList<>();
         }
     }
-    
+
 }
