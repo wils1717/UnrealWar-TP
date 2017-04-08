@@ -2,6 +2,8 @@ package beans;
 
 import java.io.Serializable;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +20,14 @@ public class Registration implements Serializable {
     private String newPassword;
     private String confirmPassword;
     private int id;
-    private int loses;
+    private int losses;
     private int wins;
     private boolean registered;
     private boolean deleted;
     private boolean passwordChanged;
     Random ran = new Random();
+    private List<User> users;
+    private static User instance = new User();
 
     public Registration() {
         username = null;
@@ -33,7 +37,7 @@ public class Registration implements Serializable {
         confirmPassword = null;
         id = 0;
         wins = 0;
-        loses = 0;
+        losses = 0;
         registered = false;
         deleted = false;
         passwordChanged = false;
@@ -84,12 +88,12 @@ public class Registration implements Serializable {
         this.passwordChanged = passwordChanged;
     }
 
-    public int getLoses() {
-        return loses;
+    public int getLosses() {
+        return losses;
     }
 
-    public void setLoses(int loses) {
-        this.loses = loses;
+    public void setLosses(int losses) {
+        this.losses = losses;
     }
 
     public int getWins() {
@@ -132,21 +136,65 @@ public class Registration implements Serializable {
         return deleted;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public static User getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(User instance) {
+        Registration.instance = instance;
+    }
+
+    public void getUsersFromDB() {
+        try (Connection conn = DBUtils.getConnection()) {
+            users = new ArrayList<>();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+            while (rs.next()) {
+                User u = new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("passhash"),
+                        rs.getInt("wins"),
+                        rs.getInt("losses")
+                );
+                users.add(u);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            // This Fails Silently -- Sets User List as Empty
+            users = new ArrayList<>();
+        }
+    }
+
     /**
      * Add a user to the DB
      *
-     * ^.*(?=.{4,10})(?=.*\d)(?=.*[a-zA-Z]).*$
+     * 
      *
      */
     public void addUser() {
         try (Connection conn = DBUtils.getConnection()) {
+            getUsersFromDB();
             if (username.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$") && password.matches("^.*(?=.{4,10})(?=.*\\d)(?=.*[a-zA-Z]).*$")) {
+                int counter = 1;
                 String passhash = DBUtils.hash(password);
                 Statement stmt = conn.createStatement();
-                id = ran.nextInt(2000000000);
-                stmt.executeUpdate("INSERT INTO users VALUES (" + id + ",'" + username + "','" + passhash + "', " + wins + ", " + loses + ")");
+                for (User u : users) {
+                    counter++;
+                }
+                id = counter;
+                stmt.executeUpdate("INSERT INTO users VALUES (" + id + ",'" + username + "','" + passhash + "', " + wins + ", " + losses + ")");
                 registered = true;
                 System.out.println(username);
+
             } else {
 
             }
@@ -166,6 +214,7 @@ public class Registration implements Serializable {
                     pstmt.setString(3, DBUtils.hash(oldPassword));
                     pstmt.executeUpdate();
                     passwordChanged = true;
+                    getUsersFromDB();
                 }
             }
 
@@ -182,6 +231,7 @@ public class Registration implements Serializable {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "' AND passhash = '" + passhash + "'");
             deleted = true;
+            getUsersFromDB();
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }

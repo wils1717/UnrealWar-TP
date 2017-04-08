@@ -32,7 +32,7 @@ public class UserController {
     /**
      * Retrieve the List of UserController from the DB
      */
-    private void getUsersFromDB() {
+    public void getUsersFromDB() {
         try (Connection conn = DBUtils.getConnection()) {
             users = new ArrayList<>();
             Statement stmt = conn.createStatement();
@@ -43,7 +43,7 @@ public class UserController {
                         rs.getString("username"),
                         rs.getString("passhash"),
                         rs.getInt("wins"),
-                        rs.getInt("loses")
+                        rs.getInt("losses")
                 );
                 users.add(u);
             }
@@ -58,14 +58,17 @@ public class UserController {
         try {
             String sql = "";
             Connection conn = DBUtils.getConnection();
-            sql = "INSERT INTO users (id, username, passhash, wins, loses) VALUES (?, ?, ?, ?)";
+            sql = "INSERT INTO users (id, username, passhash, wins, losses) VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            int id = ran.nextInt(2000000000);
+            int id = 1;
+            for (User y : users) {
+                    id++;
+                }
             pstmt.setInt(1, id);
             pstmt.setString(2, u.getUsername());
             pstmt.setString(3, DBUtils.hash(u.getPasshash()));
             pstmt.setInt(4, u.getWins());
-            pstmt.setInt(5, u.getLoses());
+            pstmt.setInt(5, u.getLosses());
             pstmt.executeUpdate();
             conn.close();
         } catch (SQLException ex) {
@@ -77,12 +80,12 @@ public class UserController {
         try {
             String sql = "";
             Connection conn = DBUtils.getConnection();
-            sql = "UPDATE users SET username = ?, passhash = ?, wins = ?, loses = ? WHERE id = ?";
+            sql = "UPDATE users SET username = ?, passhash = ?, wins = ?, losses = ? WHERE id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, u.getUsername());
             pstmt.setString(2, DBUtils.hash(u.getPasshash()));
             pstmt.setInt(3, u.getWins());
-            pstmt.setInt(4, u.getLoses());           
+            pstmt.setInt(4, u.getLosses());           
             pstmt.setInt(5, u.getId());          
             pstmt.executeUpdate();
             conn.close();
@@ -194,7 +197,7 @@ public class UserController {
         u.setUsername(json.getString("username", ""));
         u.setPasshash(json.getString("passhash", ""));
         u.setWins(json.getInt("wins", 0));
-        u.setLoses(json.getInt("loses", 0));       
+        u.setLosses(json.getInt("losses", 0));       
         editToDb(u);
         return u.toJson();
     }
