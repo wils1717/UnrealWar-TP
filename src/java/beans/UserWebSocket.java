@@ -27,11 +27,11 @@ public class UserWebSocket {
             JsonObject json = Json.createReader(new StringReader(user)).readObject();
             if (json.containsKey("getAll")) {
                 output = userController.getAllJson().toString();
-            } else if (json.containsKey("getByUsername")) {
-                output = userController.getByUsernameJson(json.getString("getByUsername")).toString();
+            } else if (json.containsKey("getById")) {
+                output = userController.getByIdJson(json.getInt("getById")).toString();
             } else if (json.containsKey("put")) {
-                String username = json.getJsonObject("put").getString("username");
-                output = userController.editJson(username, json.getJsonObject("put")).toString();
+                int id = json.getJsonObject("put").getInt("id");
+                output = userController.editJson(id, json.getJsonObject("put")).toString();
             } else {
                 output = Json.createObjectBuilder()
                         .add("error", "Invalid Request")

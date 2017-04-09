@@ -2,6 +2,7 @@ package beans;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,6 +90,7 @@ public class UserController {
     }
 
     public List<User> getUsers() {
+        users.sort(Comparator.comparing(User::getWins).reversed());
         return users;
     }
 
@@ -178,8 +180,8 @@ public class UserController {
         }
     }
 
-    public JsonObject editJson(String username, JsonObject json) {
-        User u = getByUsername(username);
+    public JsonObject editJson(int id, JsonObject json) {
+        User u = getById(id);
         u.setUsername(json.getString("username", ""));
         u.setPasshash(json.getString("passhash", ""));
         u.setWins(json.getInt("wins", 0));
@@ -217,7 +219,7 @@ public class UserController {
             sql = "UPDATE users SET username = ?, passhash = ?, wins = ?, losses = ? WHERE id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, u.getUsername());
-            pstmt.setString(2, DBUtils.hash(u.getPasshash()));
+            pstmt.setString(2, u.getPasshash());
             pstmt.setInt(3, u.getWins());
             pstmt.setInt(4, u.getLosses());           
             pstmt.setInt(5, u.getId());          
@@ -238,7 +240,6 @@ public class UserController {
         try (Connection conn = DBUtils.getConnection()) {
             if (instance.username.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$") && instance.passhash.matches("^.*(?=.{4,10})(?=.*\\d)(?=.*[a-zA-Z]).*$")) {
                 int counter = 1;
-                String passhash = DBUtils.hash(instance.passhash);
                 Statement stmt = conn.createStatement();
                 for (User u : users) {
                     counter++;
