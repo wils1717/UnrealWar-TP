@@ -16,14 +16,14 @@
         <title>Change Password Page</title>
     </h:head>
     <h:body>
-        <c:if test="#{registration.passwordChanged}">
+        <c:if test="#{userController.passwordChanged}">
             <h1>Unreal War!</h1><br></br>
             <h3>Password Changed</h3>
             <h:form>
-                <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{registration.clearFields()}"/>
+                <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{userController.clearFields()}"/>
             </h:form>
         </c:if>
-        <c:if test="#{!registration.passwordChanged}">
+        <c:if test="#{!userController.passwordChanged}">
             <div class="container panel panel-default">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
@@ -34,11 +34,11 @@
                     <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                         <div class="form-group">
                             <h:form style="inline">
-                                <p>Username: <h:inputText value="#{registration.username}"/></p>
-                                <p>Old Password: <h:inputSecret value="#{registration.oldPassword}"/></p>
-                                <p>New Password: <h:inputSecret value="#{registration.newPassword}"/></p>
-                                <p>Confirm new Password: <h:inputSecret value="#{registration.confirmPassword}"/></p>
-                                <h:commandButton value="Change Password" class="btn btn-lg raised" style="font-size:24px" action="#{registration.editUserPassword(registration.username, registration.oldPassword, registration.newPassword, registration.confirmPassword)}" />
+                                <p>Username: <h:inputText value="#{userController.instance.username}"/></p>
+                                <p>Old Password: <h:inputSecret value="#{userController.oldPassword}"/></p>
+                                <p>New Password: <h:inputSecret value="#{userController.newPassword}"/></p>
+                                <p>Confirm new Password: <h:inputSecret value="#{userController.confirmPassword}"/></p>
+                                <h:commandButton value="Change Password" class="btn btn-lg raised" style="font-size:24px" action="#{userController.editUserPassword(userController.instance.username, userController.oldPassword, userController.newPassword, userController.confirmPassword)}" />
                             </h:form>
                         </div>
                     </div>

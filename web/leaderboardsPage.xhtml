@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'/>
@@ -23,14 +24,17 @@
                 <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                     <div class="form-group">
                         <h:form>
-                            <h:dataTable value="#{registration.users}" var="users">
+                            <h:dataTable value="#{userController.users}" var="users">
                                 <h:column>
+                                    <f:facet name="header"><h2>Username</h2></f:facet>
                                     #{users.username}
                                 </h:column>
                                 <h:column>
+                                    <f:facet name="header"><h2>Wins</h2></f:facet>
                                     #{users.wins}
                                 </h:column>
                                 <h:column>
+                                    <f:facet name="header"><h2>Losses</h2></f:facet>
                                     #{users.losses}
                                 </h:column>
                             </h:dataTable>

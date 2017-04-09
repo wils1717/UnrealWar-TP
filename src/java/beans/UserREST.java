@@ -39,13 +39,6 @@ public class UserREST {
         }
     }
 
-    @POST
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Response add(JsonObject json) {
-        return Response.ok(userController.addJson(json)).build();
-    }
-
     @PUT
     @Path("{username}")
     @Consumes("application/json")
@@ -54,16 +47,6 @@ public class UserREST {
         JsonObject jsonWithUsername = userController.editJson(username, json);
         if (jsonWithUsername != null) {
             return Response.ok(jsonWithUsername).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-
-    @DELETE
-    @Path("{username}")
-    public Response del(@PathParam("username") String username) {
-        if (userController.deleteByUsername(username)) {
-            return Response.ok().build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

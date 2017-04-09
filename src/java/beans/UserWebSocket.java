@@ -29,15 +29,9 @@ public class UserWebSocket {
                 output = userController.getAllJson().toString();
             } else if (json.containsKey("getByUsername")) {
                 output = userController.getByUsernameJson(json.getString("getByUsername")).toString();
-            } else if (json.containsKey("post")) {
-                output = userController.addJson(json.getJsonObject("post")).toString();
             } else if (json.containsKey("put")) {
                 String username = json.getJsonObject("put").getString("username");
                 output = userController.editJson(username, json.getJsonObject("put")).toString();
-            } else if (json.containsKey("delete")) {
-                output = Json.createObjectBuilder()
-                        .add("ok", userController.deleteByUsername(json.getString("delete")))
-                        .build().toString();
             } else {
                 output = Json.createObjectBuilder()
                         .add("error", "Invalid Request")
