@@ -244,7 +244,7 @@ function checkWin() {
         $.ajax({
             type: "POST",
             url: "/UnrealWar-TP/api/leaderboard",
-            data: JSON.stringify({score: loses}),
+            data: JSON.stringify({score: losses}),
             dataType: 'json',
             success: function (response) {
                 console.log(response);
@@ -333,5 +333,4 @@ function sizeElements() {
             $("#desktop").show();
         }
     }
-
 }

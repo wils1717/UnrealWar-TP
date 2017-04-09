@@ -44,6 +44,7 @@ public class Login implements Serializable {
         password = null;
         loggedIn = false;
         currentUser = null;
+        getUsersFromDB();
     }
 
     public String logout() {
@@ -89,9 +90,9 @@ public class Login implements Serializable {
     }
 
     public String login() {
-        String passhash = DBUtils.hash(password);
         getUsersFromDB();
-        for (User u : UserController.getInstance().getUsers()) {
+        String passhash = DBUtils.hash(password);
+        for (User u : users) {
             if (username.equals(u.getUsername())
                     && passhash.equals(u.getPasshash())) {
                 loggedIn = true;
@@ -99,7 +100,6 @@ public class Login implements Serializable {
                 return "game";
             }
         }
-        getUsersFromDB();
         currentUser = null;
         logout();
         loggedIn = false;

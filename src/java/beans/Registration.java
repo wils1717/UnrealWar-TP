@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
@@ -40,6 +39,7 @@ public class Registration implements Serializable {
         registered = false;
         deleted = false;
         passwordChanged = false;
+        getUsersFromDB();
     }
 
     public String clearFields() {
@@ -52,6 +52,7 @@ public class Registration implements Serializable {
         registered = false;
         deleted = false;
         passwordChanged = false;
+        getUsersFromDB();
         return "loginPage";
     }
 
@@ -181,7 +182,6 @@ public class Registration implements Serializable {
      */
     public void addUser() {
         try (Connection conn = DBUtils.getConnection()) {
-            getUsersFromDB();
             if (username.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$") && password.matches("^.*(?=.{4,10})(?=.*\\d)(?=.*[a-zA-Z]).*$")) {
                 int counter = 1;
                 String passhash = DBUtils.hash(password);
@@ -193,9 +193,6 @@ public class Registration implements Serializable {
                 stmt.executeUpdate("INSERT INTO users VALUES (" + id + ",'" + username + "','" + passhash + "', " + wins + ", " + losses + ")");
                 registered = true;
                 System.out.println(username);
-                getUsersFromDB();
-            } else {
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);

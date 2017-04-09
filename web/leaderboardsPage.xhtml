@@ -23,7 +23,7 @@
                 <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                     <div class="form-group">
                         <h:form>
-                            <h:dataTable value="#{userController.users}" var="users">
+                            <h:dataTable value="#{registration.users}" var="users">
                                 <h:column>
                                     #{users.username}
                                 </h:column>
@@ -31,7 +31,7 @@
                                     #{users.wins}
                                 </h:column>
                                 <h:column>
-                                    #{users.loses}
+                                    #{users.losses}
                                 </h:column>
                             </h:dataTable>
                             <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
