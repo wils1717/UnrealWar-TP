@@ -17,14 +17,14 @@
         <title>Registration Page</title>
     </h:head>
     <h:body>
-        <c:if test="#{registration.registered}">
+        <c:if test="#{userController.registered}">
             <h1>Unreal War!</h1><br></br>
             <h3>Thanks for registering!</h3>
             <h:form>
-                <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{registration.clearFields()}"/>
+                <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{userController.clearFields()}"/>
             </h:form>
         </c:if>
-        <c:if test="#{!registration.registered}">
+        <c:if test="#{!userController.registered}">
             <div class="container panel panel-default">
                 <div class="row">
                     <div class="forum-group col-lg-8 col-lg-offset-2">
@@ -35,9 +35,9 @@
                     <div class="col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                         <div class="form-group">
                             <h:form>
-                                <p>Please enter your desired username: <h:inputText value="#{registration.username}"/></p>
-                                <p>Enter a password: <h:inputSecret value="#{registration.password}"/></p>
-                                <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{registration.addUser()}"/>
+                                <p>Please enter your desired username: <h:inputText value="#{userController.instance.username}"/></p>
+                                <p>Enter a password: <h:inputSecret value="#{userController.instance.passhash}"/></p>
+                                <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{userController.addUser()}"/>
                                 <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                             </h:form>
                         </div>
@@ -52,9 +52,11 @@
 
                 </footer>
             </div>
+
         </c:if> 
         <script src="js/jquery-3.2.0.min.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js"></script>
+
     </h:body>
 </html>
 

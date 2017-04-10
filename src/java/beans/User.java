@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package beans;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 public class User {
 
@@ -11,17 +10,25 @@ public class User {
     public String username;
     public String passhash;
     public int wins;
-    public int loses;
+    public int losses;
 
-    public User(int id, String username, String passhash, int wins, int loses) {
+    public User(int id, String username, String passhash, int wins, int losses) {
         this.id = id;
         this.username = username;
         this.passhash = passhash;
         this.wins = wins;
-        this.loses = loses;
+        this.losses = losses;
     }
 
     User() {
+    }
+    
+    public User(JsonObject json) {        
+        id = json.getInt("id", 0);
+        username = json.getString("username", "");
+        passhash = json.getString("passhash", "");
+        wins = json.getInt("wins", 0);
+        losses = json.getInt("losses", 0);
     }
 
     public int getWins() {
@@ -32,12 +39,12 @@ public class User {
         this.wins = wins;
     }
 
-    public int getLoses() {
-        return loses;
+    public int getLosses() {
+        return losses;
     }
 
-    public void setLoses(int loses) {
-        this.loses = loses;
+    public void setLosses(int losses) {
+        this.losses = losses;
     }
 
     public int getId() {
@@ -62,6 +69,16 @@ public class User {
 
     public void setPasshash(String passhash) {
         this.passhash = passhash;
+    }
+    
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
+                .add("id", id)
+                .add("username", username)
+                .add("passhash", passhash)
+                .add("wins", wins)
+                .add("losses", losses)
+                .build();
     }
 
 }
