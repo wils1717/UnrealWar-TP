@@ -10,14 +10,14 @@ public class User {
     public String username;
     public String passhash;
     public int wins;
-    public int loses;
+    public int losses;
 
-    public User(int id, String username, String passhash, int wins, int loses) {
+    public User(int id, String username, String passhash, int wins, int losses) {
         this.id = id;
         this.username = username;
         this.passhash = passhash;
         this.wins = wins;
-        this.loses = loses;
+        this.losses = losses;
     }
 
     User() {
@@ -28,7 +28,7 @@ public class User {
         username = json.getString("username", "");
         passhash = json.getString("passhash", "");
         wins = json.getInt("wins", 0);
-        loses = json.getInt("loses", 0);
+        losses = json.getInt("losses", 0);
     }
 
     public int getWins() {
@@ -39,12 +39,12 @@ public class User {
         this.wins = wins;
     }
 
-    public int getLoses() {
-        return loses;
+    public int getLosses() {
+        return losses;
     }
 
-    public void setLoses(int loses) {
-        this.loses = loses;
+    public void setLosses(int losses) {
+        this.losses = losses;
     }
 
     public int getId() {
@@ -77,7 +77,7 @@ public class User {
                 .add("username", username)
                 .add("passhash", passhash)
                 .add("wins", wins)
-                .add("loses", loses)
+                .add("losses", losses)
                 .build();
     }
 

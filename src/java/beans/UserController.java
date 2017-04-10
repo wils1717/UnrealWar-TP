@@ -1,10 +1,9 @@
-
 package beans;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.*;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
@@ -18,96 +17,95 @@ import javax.json.JsonObject;
 @ApplicationScoped
 public class UserController {
 
+    private String oldPassword;
+    private String newPassword;
+    private String confirmPassword;
+    private boolean registered;
+    private boolean deleted;
+    private boolean passwordChanged;
     private List<User> users;
-    private static UserController instance = new UserController();
-    Random ran = new Random();
+    private User instance = new User();
 
-    /**
-     * No-arg constructor -- retrieves List from DB and sets up singleton
-     */
     public UserController() {
+        instance = new User(0, "", "", 0, 0);
+        oldPassword = null;
+        newPassword = null;
+        confirmPassword = null;
+        registered = false;
+        deleted = false;
+        passwordChanged = false;
         getUsersFromDB();
     }
 
-    /**
-     * Retrieve the List of UserController from the DB
-     */
-    private void getUsersFromDB() {
-        try (Connection conn = DBUtils.getConnection()) {
-            users = new ArrayList<>();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-            while (rs.next()) {
-                User u = new User(
-                        rs.getInt("id"),
-                        rs.getString("username"),
-                        rs.getString("passhash"),
-                        rs.getInt("wins"),
-                        rs.getInt("loses")
-                );
-                users.add(u);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-            // This Fails Silently -- Sets User List as Empty
-            users = new ArrayList<>();
-        }
+    public String clearFields() {
+        oldPassword = null;
+        newPassword = null;
+        confirmPassword = null;
+        registered = false;
+        deleted = false;
+        passwordChanged = false;
+        getUsersFromDB();
+        return "loginPage";
     }
 
-    public void addToDb(User u) {
-        try {
-            String sql = "";
-            Connection conn = DBUtils.getConnection();
-            sql = "INSERT INTO users (id, username, passhash, wins, loses) VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            int id = ran.nextInt(2000000000);
-            pstmt.setInt(1, id);
-            pstmt.setString(2, u.getUsername());
-            pstmt.setString(3, DBUtils.hash(u.getPasshash()));
-            pstmt.setInt(4, u.getWins());
-            pstmt.setInt(5, u.getLoses());
-            pstmt.executeUpdate();
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
-    
-    public void editToDb(User u) {
-        try {
-            String sql = "";
-            Connection conn = DBUtils.getConnection();
-            sql = "UPDATE users SET username = ?, passhash = ?, wins = ?, loses = ? WHERE id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, u.getUsername());
-            pstmt.setString(2, DBUtils.hash(u.getPasshash()));
-            pstmt.setInt(3, u.getWins());
-            pstmt.setInt(4, u.getLoses());           
-            pstmt.setInt(5, u.getId());          
-            pstmt.executeUpdate();
-            conn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
-    /**
-     * Retrieve the List of User objects
-     *
-     * @return the List of User objects
-     */
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public boolean isPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
+    }
+
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public List<User> getUsers() {
+        users.sort(Comparator.comparing(User::getWins).reversed());
         return users;
     }
 
-    /**
-     * Retrieve the known instance of this class
-     *
-     * @return the known instance of this class
-     */
-    public static UserController getInstance() {
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public User getInstance() {
         return instance;
     }
 
+    public void setInstance(User instance) {
+        this.instance = instance;
+    }
+    
     /**
      * Retrieve a specific username by ID
      *
@@ -182,43 +180,111 @@ public class UserController {
         }
     }
 
-    public JsonObject addJson(JsonObject json) {
-        User u = new User(json);
-        addToDb(u);
-        users.add(u);
-        return u.toJson();
-    }
-
-    public JsonObject editJson(String username, JsonObject json) {
-        User u = getByUsername(username);
+    public JsonObject editJson(int id, JsonObject json) {
+        User u = getById(id);
         u.setUsername(json.getString("username", ""));
         u.setPasshash(json.getString("passhash", ""));
         u.setWins(json.getInt("wins", 0));
-        u.setLoses(json.getInt("loses", 0));       
+        u.setLosses(json.getInt("losses", 0));       
         editToDb(u);
         return u.toJson();
     }
 
-    public void removeFromDb(User u) {
+    public void getUsersFromDB() {
+        try (Connection conn = DBUtils.getConnection()) {
+            users = new ArrayList<>();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+            while (rs.next()) {
+                User u = new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("passhash"),
+                        rs.getInt("wins"),
+                        rs.getInt("losses")
+                );
+                users.add(u);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            // This Fails Silently -- Sets User List as Empty
+            users = new ArrayList<>();
+        }
+    }
+    
+    public void editToDb(User u) {
         try {
+            String sql = "";
             Connection conn = DBUtils.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM users WHERE username = ?");
+            sql = "UPDATE users SET username = ?, passhash = ?, wins = ?, losses = ? WHERE id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, u.getUsername());
+            pstmt.setString(2, u.getPasshash());
+            pstmt.setInt(3, u.getWins());
+            pstmt.setInt(4, u.getLosses());           
+            pstmt.setInt(5, u.getId());          
             pstmt.executeUpdate();
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public boolean deleteByUsername(String username) {
-        User u = getByUsername(username);
-        if (u != null) {
-            removeFromDb(u);
-            users.remove(u);
-            return true;
-        } else {
-            return false;
+
+    /**
+     * Add a user to the DB
+     *
+     *
+     *
+     */
+    public void addUser() {
+        try (Connection conn = DBUtils.getConnection()) {
+            if (instance.username.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$") && instance.passhash.matches("^.*(?=.{4,10})(?=.*\\d)(?=.*[a-zA-Z]).*$")) {
+                int counter = 1;
+                Statement stmt = conn.createStatement();
+                for (User u : users) {
+                    counter++;
+                }
+                instance.id = counter;
+                stmt.executeUpdate("INSERT INTO users VALUES (" + instance.id + ",'" + instance.username + "','" + DBUtils.hash(instance.passhash) + "', " + instance.wins + ", " + instance.losses + ")");
+                registered = true;
+                System.out.println(instance.username);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void editUserPassword(String username, String oldPassword, String newPassword, String confirmPassword) {
+        try (Connection conn = DBUtils.getConnection()) {
+            if (newPassword.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$")) {
+                if (newPassword.matches(confirmPassword)) {
+                    String sql = "UPDATE users SET passhash = ? WHERE username = ? AND passhash = ?";
+                    PreparedStatement pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, DBUtils.hash(newPassword));
+                    pstmt.setString(2, username);
+                    pstmt.setString(3, DBUtils.hash(oldPassword));
+                    pstmt.executeUpdate();
+                    passwordChanged = true;
+                    getUsersFromDB();
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void deleteUser(String username, String password) {
+        try {
+            String passhash = DBUtils.hash(password);
+            Connection conn = DBUtils.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "' AND passhash = '" + passhash + "'");
+            deleted = true;
+            getUsersFromDB();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

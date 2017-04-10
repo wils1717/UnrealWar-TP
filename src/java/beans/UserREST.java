@@ -5,9 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -39,31 +37,14 @@ public class UserREST {
         }
     }
 
-    @POST
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Response add(JsonObject json) {
-        return Response.ok(userController.addJson(json)).build();
-    }
-
     @PUT
-    @Path("{username}")
+    @Path("{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response edit(@PathParam("username") String username, JsonObject json) {
-        JsonObject jsonWithUsername = userController.editJson(username, json);
-        if (jsonWithUsername != null) {
-            return Response.ok(jsonWithUsername).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-
-    @DELETE
-    @Path("{username}")
-    public Response del(@PathParam("username") String username) {
-        if (userController.deleteByUsername(username)) {
-            return Response.ok().build();
+    public Response edit(@PathParam("id") int id, JsonObject json) {
+        JsonObject jsonWithId = userController.editJson(id, json);
+        if (jsonWithId != null) {
+            return Response.ok(jsonWithId).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

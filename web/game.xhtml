@@ -76,6 +76,9 @@
                     </div>
 
                     <div><button onclick="play()">PLAY!</button></div>
+                    <h:form>
+                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                    </h:form>
                 </div>
 
                 <div id="warAnimation">WAR</div>
@@ -94,6 +97,9 @@
                         <div class="compCard"></div>
                         <div class="compDeck"><img src="img/cards/cardback.jpg"/></div>
                     </div>
+                    <h:form>
+                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                    </h:form>
                 </div>
 
                 <div id='mobile' class="game">
@@ -107,6 +113,9 @@
                     <div class="compCount"></div><br></br>
                     <div class="compDeck"><img src="img/cards/cardback.jpg"/></div>
                     <div class="compCard"></div>
+                    <h:form>
+                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                    </h:form>
                 </div>
             </div>
         </c:if>
