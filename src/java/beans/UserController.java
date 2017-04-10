@@ -17,33 +17,36 @@ import javax.json.JsonObject;
 @ApplicationScoped
 public class UserController {
 
-    private String oldPassword;
     private String newPassword;
     private String confirmPassword;
     private boolean registered;
     private boolean deleted;
     private boolean passwordChanged;
+    private boolean incorrectPassChange;
+    private boolean incorrectPassDelete;
     private List<User> users;
     private User instance = new User();
 
     public UserController() {
         instance = new User(0, "", "", 0, 0);
-        oldPassword = null;
         newPassword = null;
         confirmPassword = null;
         registered = false;
         deleted = false;
         passwordChanged = false;
+        incorrectPassChange = false;
+        incorrectPassDelete = false;
         getUsersFromDB();
     }
 
     public String clearFields() {
-        oldPassword = null;
         newPassword = null;
         confirmPassword = null;
         registered = false;
         deleted = false;
         passwordChanged = false;
+        incorrectPassChange = false;
+        incorrectPassDelete = false;
         getUsersFromDB();
         return "loginPage";
     }
@@ -56,20 +59,28 @@ public class UserController {
         this.confirmPassword = confirmPassword;
     }
 
-    public String getOldPassword() {
-        return oldPassword;
-    }
-
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
-    }
-
     public String getNewPassword() {
         return newPassword;
     }
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public boolean isIncorrectPassChange() {
+        return incorrectPassChange;
+    }
+
+    public void setIncorrectPassChange(boolean incorrectPassChange) {
+        this.incorrectPassChange = incorrectPassChange;
+    }
+
+    public boolean isIncorrectPassDelete() {
+        return incorrectPassDelete;
+    }
+
+    public void setIncorrectPassDelete(boolean incorrectPassDelete) {
+        this.incorrectPassDelete = incorrectPassDelete;
     }
 
     public boolean isPasswordChanged() {
@@ -79,7 +90,6 @@ public class UserController {
     public void setPasswordChanged(boolean passwordChanged) {
         this.passwordChanged = passwordChanged;
     }
-
 
     public boolean isRegistered() {
         return registered;
@@ -105,7 +115,7 @@ public class UserController {
     public void setInstance(User instance) {
         this.instance = instance;
     }
-    
+
     /**
      * Retrieve a specific username by ID
      *
@@ -120,7 +130,7 @@ public class UserController {
         }
         return null;
     }
-    
+
     /**
      * Retrieve a specific user ID by username
      *
@@ -135,7 +145,7 @@ public class UserController {
         }
         return -1;
     }
-    
+
     public JsonArray getAllJson() {
         JsonArrayBuilder json = Json.createArrayBuilder();
         for (User u : users) {
@@ -152,8 +162,8 @@ public class UserController {
         }
         return null;
     }
-    
-        public User getByUsername(String username) {
+
+    public User getByUsername(String username) {
         for (User u : users) {
             if (u.getUsername() == username) {
                 return u;
@@ -170,8 +180,8 @@ public class UserController {
             return null;
         }
     }
-    
-        public JsonObject getByUsernameJson(String username) {
+
+    public JsonObject getByUsernameJson(String username) {
         User u = getByUsername(username);
         if (u != null) {
             return getByUsername(username).toJson();
@@ -185,7 +195,7 @@ public class UserController {
         u.setUsername(json.getString("username", ""));
         u.setPasshash(json.getString("passhash", ""));
         u.setWins(json.getInt("wins", 0));
-        u.setLosses(json.getInt("losses", 0));       
+        u.setLosses(json.getInt("losses", 0));
         editToDb(u);
         return u.toJson();
     }
@@ -211,7 +221,7 @@ public class UserController {
             users = new ArrayList<>();
         }
     }
-    
+
     public void editToDb(User u) {
         try {
             String sql = "";
@@ -221,8 +231,8 @@ public class UserController {
             pstmt.setString(1, u.getUsername());
             pstmt.setString(2, u.getPasshash());
             pstmt.setInt(3, u.getWins());
-            pstmt.setInt(4, u.getLosses());           
-            pstmt.setInt(5, u.getId());          
+            pstmt.setInt(4, u.getLosses());
+            pstmt.setInt(5, u.getId());
             pstmt.executeUpdate();
             conn.close();
         } catch (SQLException ex) {
@@ -256,17 +266,24 @@ public class UserController {
 
     public void editUserPassword(String username, String oldPassword, String newPassword, String confirmPassword) {
         try (Connection conn = DBUtils.getConnection()) {
-            if (newPassword.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$")) {
-                if (newPassword.matches(confirmPassword)) {
-                    String sql = "UPDATE users SET passhash = ? WHERE username = ? AND passhash = ?";
-                    PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, DBUtils.hash(newPassword));
-                    pstmt.setString(2, username);
-                    pstmt.setString(3, DBUtils.hash(oldPassword));
-                    pstmt.executeUpdate();
-                    passwordChanged = true;
-                    getUsersFromDB();
+            getUsersFromDB();
+            for (User u : users) {
+                if (instance.username.equals(u.getUsername())
+                        && instance.passhash.equals(u.getPasshash())) {
+                    if (newPassword.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$")) {
+                        if (newPassword.matches(confirmPassword)) {
+                            String sql = "UPDATE users SET passhash = ? WHERE username = ? AND passhash = ?";
+                            PreparedStatement pstmt = conn.prepareStatement(sql);
+                            pstmt.setString(1, DBUtils.hash(newPassword));
+                            pstmt.setString(2, username);
+                            pstmt.setString(3, DBUtils.hash(oldPassword));
+                            pstmt.executeUpdate();
+                            passwordChanged = true;
+                            getUsersFromDB();
+                        }
+                    }   
                 }
+                incorrectPassChange = true;
             }
 
         } catch (SQLException ex) {
@@ -277,12 +294,18 @@ public class UserController {
 
     public void deleteUser(String username, String password) {
         try {
-            String passhash = DBUtils.hash(password);
-            Connection conn = DBUtils.getConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "' AND passhash = '" + passhash + "'");
-            deleted = true;
-            getUsersFromDB();
+            for (User u : users) {
+                if (instance.username.equals(u.getUsername())
+                        && instance.passhash.equals(u.getPasshash())) {
+                    String passhash = DBUtils.hash(password);
+                    Connection conn = DBUtils.getConnection();
+                    Statement stmt = conn.createStatement();
+                    stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "' AND passhash = '" + passhash + "'");
+                    deleted = true;
+                    getUsersFromDB();
+                }
+                incorrectPassDelete = true;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }

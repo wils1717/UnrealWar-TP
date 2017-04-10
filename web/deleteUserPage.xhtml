@@ -24,6 +24,10 @@
                 <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{userController.clearFields()}"/>
             </h:form>
         </c:if>
+        <c:if test="#{userController.incorrectPassDelete}">
+            <h1>Unreal War!</h1><br></br>
+            <h3>Sorry but the password provided does not match the password in our database</h3>
+        </c:if>
         <c:if test="#{!userController.deleted}">
             <div class="container panel panel-default">
                 <div class="row">
