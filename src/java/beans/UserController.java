@@ -28,7 +28,7 @@ public class UserController {
     private User instance = new User();
     
     public UserController() {
-        instance = new User(0, "", "", 0, 0);
+        instance = new User(0, "", null, 0, 0);
         newPassword = null;
         confirmPassword = null;
         registered = false;
@@ -248,7 +248,8 @@ public class UserController {
      */
     public void addUser() {
         try (Connection conn = DBUtils.getConnection()) {
-            if (instance.username.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$") && instance.passhash.matches("^.*(?=.{4,10})(?=.*\\d)(?=.*[a-zA-Z]).*$")) {
+            getUsersFromDB();
+            if (!instance.username.isEmpty() && instance.passhash.matches("^.*(?=.{4,10})(?=.*\\d)(?=.*[a-zA-Z]).*$")) {
                 int counter = 1;
                 Statement stmt = conn.createStatement();
                 for (User u : users) {
@@ -257,7 +258,7 @@ public class UserController {
                 instance.id = counter;
                 stmt.executeUpdate("INSERT INTO users VALUES (" + instance.id + ",'" + instance.username + "','" + DBUtils.hash(instance.passhash) + "', " + instance.wins + ", " + instance.losses + ")");
                 registered = true;
-                System.out.println(instance.username);
+                System.out.println(counter);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
