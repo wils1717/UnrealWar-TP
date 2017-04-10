@@ -49,6 +49,7 @@
             .gameTable div {max-width: 45%; width: 250px; display: inline-block; vertical-align: middle;}
             -->
         </style>
+        
         <script src="js/jquery-3.2.0.min.js"></script>
         <script src="js/game.js"></script>
     </head>
@@ -61,6 +62,9 @@
             <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
         </c:if>
         <c:if test="#{login.loggedIn}">
+            <script>
+                var CURRENT_USER_ID = #{login.currentUser.id};
+            </script>
             <header>
                 <h1>Unreal War!</h1>
                 <h3>The fun friendly game for the whole family</h3>
@@ -76,6 +80,9 @@
                     </div>
 
                     <div><button onclick="play()">PLAY!</button></div>
+                    <h:form>
+                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                    </h:form>
                 </div>
 
                 <div id="warAnimation">WAR</div>
@@ -94,6 +101,9 @@
                         <div class="compCard"></div>
                         <div class="compDeck"><img src="img/cards/cardback.jpg"/></div>
                     </div>
+                    <h:form>
+                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                    </h:form>
                 </div>
 
                 <div id='mobile' class="game">
@@ -107,6 +117,9 @@
                     <div class="compCount"></div><br></br>
                     <div class="compDeck"><img src="img/cards/cardback.jpg"/></div>
                     <div class="compCard"></div>
+                    <h:form>
+                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                    </h:form>
                 </div>
             </div>
         </c:if>

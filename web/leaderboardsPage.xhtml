@@ -2,51 +2,54 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <!-- Bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css"/>
-        <link rel="stylesheet" href="css/loginStyles.css"/>
+        <link rel="stylesheet" href="css/styles.css"/>
         <link href="https://fonts.googleapis.com/css?family=Creepster|VT323" rel="stylesheet"/>
-        <title>Registration Page</title>
+        <title>Leaderboard Page</title>
     </h:head>
     <h:body>
-        <div>
-            <form action="/action_page.php">
-                <div class="container panel panel-default">
-                    <div class="row">
-                        <div class="forum-group col-lg-8 col-lg-offset-2">
-
-
-                            <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
-                            <div class="form-group">
-                                <h:form>
-                                    <p>Please enter your desired username: <h:inputText value="#{username}"/></p>
-                                    <p>Enter a password: <h:inputSecret value="#{password}"/></p>
-                                    <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{users.addUser(username, password)}"/>
-                                    <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
-                                </h:form>
-                            </div>
-                        </div>
+        <div class="container panel panel-default">
+            <div class="row">
+                <div class="forum-group col-lg-8 col-lg-offset-2">
+                    <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
+                    <div class="form-group">
+                        <h:form>
+                            <h:dataTable value="#{userController.users}" var="users">
+                                <h:column>
+                                    <f:facet name="header"><h2>Username</h2></f:facet>
+                                    #{users.username}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header"><h2>Wins</h2></f:facet>
+                                    #{users.wins}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header"><h2>Losses</h2></f:facet>
+                                    #{users.losses}
+                                </h:column>
+                            </h:dataTable>
+                            <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+                        </h:form>
                     </div>
                 </div>
-            </form>
-
-            <footer id="foot" class="text-center">
-
-                <div class="row">
+            </div>
+            <footer  class="text-center">
+                <div class="panel-footer row">
                     <div class="col-xs-12">
-                        <p class=""> Copyright © Unreal War. All rights reserved.</p>
+                        <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
                     </div>
                 </div>
-
+                <script src="js/jquery-3.2.0.min.js" type="text/javascript"></script>
                 <script src="js/bootstrap.min.js"></script>
             </footer>
         </div> 
