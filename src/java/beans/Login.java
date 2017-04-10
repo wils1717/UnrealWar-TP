@@ -41,7 +41,39 @@ public class Login implements Serializable {
         return "loginPage";
     }
 
-        public List<User> getUsers() {
+    public String changePass() {
+        username = null;
+        password = null;
+        loggedIn = false;
+        validUser = true;
+        return "changePassPage";
+    }
+
+    public String deleteUser() {
+        username = null;
+        password = null;
+        loggedIn = false;
+        validUser = true;
+        return "deleteUserPage";
+    }
+
+    public String register() {
+        username = null;
+        password = null;
+        loggedIn = false;
+        validUser = true;
+        return "registrationPage";
+    }
+
+    public String leaderboard() {
+        username = null;
+        password = null;
+        loggedIn = false;
+        validUser = true;
+        return "leaderboardsPage";
+    }
+
+    public List<User> getUsers() {
         return users;
     }
 
@@ -64,7 +96,7 @@ public class Login implements Serializable {
     public static void setInstance(User instance) {
         Login.instance = instance;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -100,13 +132,8 @@ public class Login implements Serializable {
                 currentUser = u;
                 return "game";
             }
-            else{
-                validUser = false;
-            }   
         }
-        if (validUser){
-            logout();
-        }
+        validUser = false;
         currentUser = null;
         loggedIn = false;
         return "loginPage";
@@ -127,6 +154,7 @@ public class Login implements Serializable {
                 );
                 users.add(u);
             }
+            validUser = true;
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             // This Fails Silently -- Sets User List as Empty

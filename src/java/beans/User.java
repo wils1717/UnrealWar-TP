@@ -3,6 +3,7 @@ package beans;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.validation.constraints.Size;
 
 public class User {
 

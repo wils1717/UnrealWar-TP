@@ -39,6 +39,8 @@
                                 <p>Please enter your username: <h:inputText value="#{userController.instance.username}"/></p>
                                 <p>Confirm your password: <h:inputSecret value="#{userController.instance.passhash}"/></p>
                                 <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{userController.deleteUser(userController.instance.username, userController.instance.passhash)}"/>
+                                <div class="divider" />
+                                <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                             </h:form>
                         </div>
                     </div>
@@ -70,6 +72,8 @@
                                 <p>Please enter your username: <h:inputText value="#{userController.instance.username}"/></p>
                                 <p>Confirm your password: <h:inputSecret value="#{userController.instance.passhash}"/></p>
                                 <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{userController.deleteUser(userController.instance.username, userController.instance.passhash)}"/>
+                                <div class="divider" />
+                                <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                             </h:form>
                         </div>
                     </div>

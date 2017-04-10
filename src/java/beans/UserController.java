@@ -26,7 +26,7 @@ public class UserController {
     private boolean incorrectPassDelete;
     private List<User> users;
     private User instance = new User();
-
+    
     public UserController() {
         instance = new User(0, "", "", 0, 0);
         newPassword = null;
@@ -282,8 +282,9 @@ public class UserController {
                             incorrectPassChange = false;
                             getUsersFromDB();
                         }
-                    }
-                } else {
+                    }   
+                }
+                else {
                     incorrectPassChange = true;
                     passwordChanged = false;
                 }
@@ -294,6 +295,20 @@ public class UserController {
         }
 
     }
+    
+        public JsonObject updateScores(int id,int score){
+           
+        User u = getById(id);
+        if (score > 0){
+            u.setWins(u.getWins()+1);
+        }
+        else {
+            u.setLosses(u.getLosses()+1);
+        }
+        editToDb(u);
+        return u.toJson();
+    }
+
 
     public void deleteUser(String username, String password) {
         try {
@@ -307,9 +322,10 @@ public class UserController {
                     deleted = true;
                     incorrectPassDelete = false;
                     getUsersFromDB();
-                } else {
-                    incorrectPassDelete = true;
                 }
+                else {
+                    incorrectPassDelete = true;
+                }      
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
