@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package beans;
 
 import java.sql.*;
@@ -7,7 +13,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -17,7 +22,9 @@ import javax.json.JsonObject;
 @Named
 @ApplicationScoped
 public class UserController {
-
+    /**
+     * Declare variables
+     */
     private String newPassword;
     private String confirmPassword;
     private boolean registered;
@@ -27,7 +34,10 @@ public class UserController {
     private boolean incorrectPassDelete;
     private List<User> users;
     private User instance = new User();
-    
+
+    /**
+     * Class constructor 
+     */
     public UserController() {
         instance = new User(0, "", "", 0, 0);
         newPassword = null;
@@ -40,6 +50,10 @@ public class UserController {
         getUsersFromDB();
     }
 
+    /**
+     * Method that clears fields when user modifies their login credentials
+     * @return 
+     */
     public String clearFields() {
         newPassword = null;
         confirmPassword = null;
@@ -52,74 +66,136 @@ public class UserController {
         return "loginPage";
     }
 
+    /**
+     * Getter for confirmPassword variable
+     * @return 
+     */
     public String getConfirmPassword() {
         return confirmPassword;
     }
-
+    
+    /**
+     * Setter for confirmPassword variable
+     * @param confirmPassword 
+     */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-
+    
+    /**
+     * Getter for newPassword variable
+     * @return 
+     */
     public String getNewPassword() {
         return newPassword;
     }
-
+    
+    /**
+     * Setter for newPassword variable
+     * @param newPassword 
+     */
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
-
+    
+    /**
+     * Getter for incorrectPassChange variable
+     * @return 
+     */
     public boolean isIncorrectPassChange() {
         return incorrectPassChange;
     }
 
+    /** Setter for incorrectPassChange variable
+     * @param incorrectPassChange 
+     */
     public void setIncorrectPassChange(boolean incorrectPassChange) {
         this.incorrectPassChange = incorrectPassChange;
     }
 
+    /**
+     * Getter for incorrectPassDelete variable
+     * @return 
+     */
     public boolean isIncorrectPassDelete() {
         return incorrectPassDelete;
     }
 
+    /**
+     * Setter for incorrectPassDelete variable
+     * @param incorrectPassDelete 
+     */
     public void setIncorrectPassDelete(boolean incorrectPassDelete) {
         this.incorrectPassDelete = incorrectPassDelete;
     }
 
+    /**
+     * Getter for passwordChanged variable
+     * @return 
+     */
     public boolean isPasswordChanged() {
         return passwordChanged;
     }
 
+    /**
+     * Setter for passwordChange variable
+     * @param passwordChanged 
+     */
     public void setPasswordChanged(boolean passwordChanged) {
         this.passwordChanged = passwordChanged;
     }
 
+    /**
+     * Getter for registered variable
+     * @return 
+     */
     public boolean isRegistered() {
         return registered;
     }
 
+    /**
+     * Getter for deleted variable
+     * @return 
+     */
     public boolean isDeleted() {
         return deleted;
     }
 
+    /**
+     * Getter for list of users 
+     * @return 
+     */
     public List<User> getUsers() {
         users.sort(Comparator.comparing(User::getWins).reversed());
         return users;
     }
 
+    /**
+     * Setter for list of users 
+     * @param users 
+     */
     public void setUsers(List<User> users) {
         this.users = users;
     }
 
+    /**
+     * Getter for instance of of User 
+     * @return 
+     */
     public User getInstance() {
         return instance;
     }
 
+    /**
+     * Setter for instance of User
+     * @param instance 
+     */
     public void setInstance(User instance) {
         this.instance = instance;
     }
 
     /**
      * Retrieve a specific username by ID
-     *
      * @param id the ID to search for
      * @return the username
      */
@@ -134,7 +210,6 @@ public class UserController {
 
     /**
      * Retrieve a specific user ID by username
-     *
      * @param username the username to search for
      * @return the user ID
      */
@@ -147,6 +222,10 @@ public class UserController {
         return -1;
     }
 
+    /**
+     * Get all User information from json object 
+     * @return 
+     */
     public JsonArray getAllJson() {
         JsonArrayBuilder json = Json.createArrayBuilder();
         for (User u : users) {
@@ -155,6 +234,11 @@ public class UserController {
         return json.build();
     }
 
+    /**
+     * Method that retrieves a specific user by ID 
+     * @param id
+     * @return 
+     */
     public User getById(int id) {
         for (User u : users) {
             if (u.getId() == id) {
@@ -164,6 +248,11 @@ public class UserController {
         return null;
     }
 
+    /**
+     * Method that retrieves a user by username
+     * @param username
+     * @return 
+     */
     public User getByUsername(String username) {
         for (User u : users) {
             if (u.getUsername() == username) {
@@ -173,6 +262,11 @@ public class UserController {
         return null;
     }
 
+    /**
+     * Method that gets user by id in json object
+     * @param id
+     * @return 
+     */
     public JsonObject getByIdJson(int id) {
         User u = getById(id);
         if (u != null) {
@@ -182,6 +276,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Method that gets user by username in json object 
+     * @param username
+     * @return 
+     */
     public JsonObject getByUsernameJson(String username) {
         User u = getByUsername(username);
         if (u != null) {
@@ -191,6 +290,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Method that edits json object based on id 
+     * @param id
+     * @param json
+     * @return 
+     */
     public JsonObject editJson(int id, JsonObject json) {
         User u = getById(id);
         u.setUsername(json.getString("username", ""));
@@ -201,6 +306,9 @@ public class UserController {
         return u.toJson();
     }
 
+    /**
+     * Retrieves users from json object into an array list 
+     */
     public void getUsersFromDB() {
         try (Connection conn = DBUtils.getConnection()) {
             users = new ArrayList<>();
@@ -223,6 +331,10 @@ public class UserController {
         }
     }
 
+    /**
+     * Edits User in database
+     * @param u 
+     */
     public void editToDb(User u) {
         try {
             String sql = "";
@@ -265,12 +377,19 @@ public class UserController {
         }
     }
 
+    /**
+     * Edits user password by username 
+     * @param username
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmPassword 
+     */
     public void editUserPassword(String username, String oldPassword, String newPassword, String confirmPassword) {
         try (Connection conn = DBUtils.getConnection()) {
             getUsersFromDB();
             for (User u : users) {
                 if (instance.username.equals(u.getUsername())
-                        && DBUtils.hash(instance.passhash).equals(u.getPasshash())) {
+                        && instance.passhash.equals(u.getPasshash())) {
                     if (newPassword.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$")) {
                         if (newPassword.matches(confirmPassword)) {
                             String sql = "UPDATE users SET passhash = ? WHERE username = ? AND passhash = ?";
@@ -280,14 +399,11 @@ public class UserController {
                             pstmt.setString(3, DBUtils.hash(oldPassword));
                             pstmt.executeUpdate();
                             passwordChanged = true;
-                            incorrectPassChange = false;
                             getUsersFromDB();
                         }
                     }   
                 }
-                else {
-                    incorrectPassChange = true;
-                }
+                incorrectPassChange = true;
             }
 
         } catch (SQLException ex) {
@@ -295,37 +411,25 @@ public class UserController {
         }
 
     }
-    
-        public JsonObject updateScores(int id,int score){
-           
-        User u = getById(id);
-        if (score > 0){
-            u.setWins(u.getWins()+1);
-        }
-        else {
-            u.setLosses(u.getLosses()+1);
-        }
-        editToDb(u);
-        return u.toJson();
-    }
 
-
+    /**
+     * Deletes user based on confirmation of user and password 
+     * @param username
+     * @param password 
+     */
     public void deleteUser(String username, String password) {
         try {
             for (User u : users) {
                 if (instance.username.equals(u.getUsername())
-                        && DBUtils.hash(instance.passhash).equals(u.getPasshash())) {
+                        && instance.passhash.equals(u.getPasshash())) {
                     String passhash = DBUtils.hash(password);
                     Connection conn = DBUtils.getConnection();
                     Statement stmt = conn.createStatement();
                     stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "' AND passhash = '" + passhash + "'");
                     deleted = true;
-                    incorrectPassDelete = false;
                     getUsersFromDB();
                 }
-                else {
-                    incorrectPassDelete = true;
-                }      
+                incorrectPassDelete = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package beans;
 
@@ -42,10 +47,9 @@ public class UserREST {
     @Consumes("application/json")
     @Produces("application/json")
     public Response edit(@PathParam("id") int id, JsonObject json) {
-        JsonObject jsonUpdate = userController.updateScores(id,json.getInt("score"));
-//        JsonObject jsonWithId = userController.editJson(id, json);
-        if (jsonUpdate != null) {
-            return Response.ok(jsonUpdate).build();
+        JsonObject jsonWithId = userController.editJson(id, json);
+        if (jsonWithId != null) {
+            return Response.ok(jsonWithId).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
