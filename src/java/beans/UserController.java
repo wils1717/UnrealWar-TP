@@ -22,7 +22,7 @@ public class UserController {
     private boolean registered;
     private boolean deleted;
     private boolean passwordChanged;
-    private boolean incorrectPassChange;
+    private int incorrectPassChange;
     private boolean incorrectPassDelete;
     private List<User> users;
     private User instance = new User();
@@ -34,7 +34,7 @@ public class UserController {
         registered = false;
         deleted = false;
         passwordChanged = false;
-        incorrectPassChange = false;
+        incorrectPassChange = 0;
         incorrectPassDelete = false;
         getUsersFromDB();
     }
@@ -45,7 +45,7 @@ public class UserController {
         registered = false;
         deleted = false;
         passwordChanged = false;
-        incorrectPassChange = false;
+        incorrectPassChange = 0;
         incorrectPassDelete = false;
         getUsersFromDB();
         return "loginPage";
@@ -67,11 +67,11 @@ public class UserController {
         this.newPassword = newPassword;
     }
 
-    public boolean isIncorrectPassChange() {
+    public int isIncorrectPassChange() {
         return incorrectPassChange;
     }
 
-    public void setIncorrectPassChange(boolean incorrectPassChange) {
+    public void setIncorrectPassChange(int incorrectPassChange) {
         this.incorrectPassChange = incorrectPassChange;
     }
 
@@ -279,14 +279,14 @@ public class UserController {
                             pstmt.setString(3, DBUtils.hash(oldPassword));
                             pstmt.executeUpdate();
                             passwordChanged = true;
-                            incorrectPassChange = false;
+                            incorrectPassChange = 2;
                             getUsersFromDB();
                         }
                     }   
                 }
                 else {
-                    incorrectPassChange = true;
                     passwordChanged = false;
+                    incorrectPassChange = 1;
                 }
             }
 
