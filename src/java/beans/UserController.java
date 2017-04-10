@@ -269,7 +269,7 @@ public class UserController {
             getUsersFromDB();
             for (User u : users) {
                 if (instance.username.equals(u.getUsername())
-                        && instance.passhash.equals(u.getPasshash())) {
+                        && DBUtils.hash(instance.passhash).equals(u.getPasshash())) {
                     if (newPassword.matches("^.*(?=.{4,10})(?=.*\\d)|(?=.*[a-zA-Z]).*$")) {
                         if (newPassword.matches(confirmPassword)) {
                             String sql = "UPDATE users SET passhash = ? WHERE username = ? AND passhash = ?";
@@ -279,11 +279,14 @@ public class UserController {
                             pstmt.setString(3, DBUtils.hash(oldPassword));
                             pstmt.executeUpdate();
                             passwordChanged = true;
+                            incorrectPassChange = false;
                             getUsersFromDB();
                         }
                     }   
                 }
-                incorrectPassChange = true;
+                else {
+                    incorrectPassChange = true;
+                }
             }
 
         } catch (SQLException ex) {
@@ -296,15 +299,18 @@ public class UserController {
         try {
             for (User u : users) {
                 if (instance.username.equals(u.getUsername())
-                        && instance.passhash.equals(u.getPasshash())) {
+                        && DBUtils.hash(instance.passhash).equals(u.getPasshash())) {
                     String passhash = DBUtils.hash(password);
                     Connection conn = DBUtils.getConnection();
                     Statement stmt = conn.createStatement();
                     stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "' AND passhash = '" + passhash + "'");
                     deleted = true;
+                    incorrectPassDelete = false;
                     getUsersFromDB();
                 }
-                incorrectPassDelete = true;
+                else {
+                    incorrectPassDelete = true;
+                }      
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);

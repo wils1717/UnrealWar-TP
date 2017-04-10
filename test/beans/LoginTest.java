@@ -128,31 +128,4 @@ public class LoginTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
-    
-    /**
-     * Test for blank password at login
-     */
-    @Test
-    public void testBlankPasswordShouldReturnErrorMessage() {
-        String username = "bob";
-        String password = "";
-        Login instance = new Login();
-        String expResult = "ERROR: Invalid Password";
-        String result = instance.doLogin(username, password);
-        assertEquals(expResult, result);        
-    }
-    
-    /**
-     * Test for blank username at login
-     */
-    @Test
-    public void testBlankUsernameShouldReturnErrorMessage() {
-        String username = "";
-        String password = "bob";
-        Login instance = new Login();
-        String expResult = "ERROR: Invalid Username";
-        String result = instance.doLogin(username, password);
-        assertEquals(expResult, result);
-    }    
 }
