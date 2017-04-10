@@ -22,7 +22,9 @@ import javax.json.JsonObject;
 @Named
 @ApplicationScoped
 public class UserController {
-
+    /**
+     * Declare variables
+     */
     private String newPassword;
     private String confirmPassword;
     private boolean registered;
@@ -33,6 +35,9 @@ public class UserController {
     private List<User> users;
     private User instance = new User();
 
+    /**
+     * Class constructor 
+     */
     public UserController() {
         instance = new User(0, "", "", 0, 0);
         newPassword = null;
@@ -45,6 +50,10 @@ public class UserController {
         getUsersFromDB();
     }
 
+    /**
+     * Method that clears fields when user modifies their login credentials
+     * @return 
+     */
     public String clearFields() {
         newPassword = null;
         confirmPassword = null;
@@ -57,74 +66,136 @@ public class UserController {
         return "loginPage";
     }
 
+    /**
+     * Getter for confirmPassword variable
+     * @return 
+     */
     public String getConfirmPassword() {
         return confirmPassword;
     }
-
+    
+    /**
+     * Setter for confirmPassword variable
+     * @param confirmPassword 
+     */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-
+    
+    /**
+     * Getter for newPassword variable
+     * @return 
+     */
     public String getNewPassword() {
         return newPassword;
     }
-
+    
+    /**
+     * Setter for newPassword variable
+     * @param newPassword 
+     */
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
-
+    
+    /**
+     * Getter for incorrectPassChange variable
+     * @return 
+     */
     public boolean isIncorrectPassChange() {
         return incorrectPassChange;
     }
 
+    /** Setter for incorrectPassChange variable
+     * @param incorrectPassChange 
+     */
     public void setIncorrectPassChange(boolean incorrectPassChange) {
         this.incorrectPassChange = incorrectPassChange;
     }
 
+    /**
+     * Getter for incorrectPassDelete variable
+     * @return 
+     */
     public boolean isIncorrectPassDelete() {
         return incorrectPassDelete;
     }
 
+    /**
+     * Setter for incorrectPassDelete variable
+     * @param incorrectPassDelete 
+     */
     public void setIncorrectPassDelete(boolean incorrectPassDelete) {
         this.incorrectPassDelete = incorrectPassDelete;
     }
 
+    /**
+     * Getter for passwordChanged variable
+     * @return 
+     */
     public boolean isPasswordChanged() {
         return passwordChanged;
     }
 
+    /**
+     * Setter for passwordChange variable
+     * @param passwordChanged 
+     */
     public void setPasswordChanged(boolean passwordChanged) {
         this.passwordChanged = passwordChanged;
     }
 
+    /**
+     * Getter for registered variable
+     * @return 
+     */
     public boolean isRegistered() {
         return registered;
     }
 
+    /**
+     * Getter for deleted variable
+     * @return 
+     */
     public boolean isDeleted() {
         return deleted;
     }
 
+    /**
+     * Getter for list of users 
+     * @return 
+     */
     public List<User> getUsers() {
         users.sort(Comparator.comparing(User::getWins).reversed());
         return users;
     }
 
+    /**
+     * Setter for list of users 
+     * @param users 
+     */
     public void setUsers(List<User> users) {
         this.users = users;
     }
 
+    /**
+     * Getter for instance of of User 
+     * @return 
+     */
     public User getInstance() {
         return instance;
     }
 
+    /**
+     * Setter for instance of User
+     * @param instance 
+     */
     public void setInstance(User instance) {
         this.instance = instance;
     }
 
     /**
      * Retrieve a specific username by ID
-     *
      * @param id the ID to search for
      * @return the username
      */
@@ -139,7 +210,6 @@ public class UserController {
 
     /**
      * Retrieve a specific user ID by username
-     *
      * @param username the username to search for
      * @return the user ID
      */
@@ -152,6 +222,10 @@ public class UserController {
         return -1;
     }
 
+    /**
+     * Get all User information from json object 
+     * @return 
+     */
     public JsonArray getAllJson() {
         JsonArrayBuilder json = Json.createArrayBuilder();
         for (User u : users) {
@@ -160,6 +234,11 @@ public class UserController {
         return json.build();
     }
 
+    /**
+     * Method that retrieves a specific user by ID 
+     * @param id
+     * @return 
+     */
     public User getById(int id) {
         for (User u : users) {
             if (u.getId() == id) {
@@ -169,6 +248,11 @@ public class UserController {
         return null;
     }
 
+    /**
+     * Method that retrieves a user by username
+     * @param username
+     * @return 
+     */
     public User getByUsername(String username) {
         for (User u : users) {
             if (u.getUsername() == username) {
@@ -178,6 +262,11 @@ public class UserController {
         return null;
     }
 
+    /**
+     * Method that gets user by id in json object
+     * @param id
+     * @return 
+     */
     public JsonObject getByIdJson(int id) {
         User u = getById(id);
         if (u != null) {
@@ -187,6 +276,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Method that gets user by username in json object 
+     * @param username
+     * @return 
+     */
     public JsonObject getByUsernameJson(String username) {
         User u = getByUsername(username);
         if (u != null) {
@@ -196,6 +290,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Method that edits json object based on id 
+     * @param id
+     * @param json
+     * @return 
+     */
     public JsonObject editJson(int id, JsonObject json) {
         User u = getById(id);
         u.setUsername(json.getString("username", ""));
@@ -206,6 +306,9 @@ public class UserController {
         return u.toJson();
     }
 
+    /**
+     * Retrieves users from json object into an array list 
+     */
     public void getUsersFromDB() {
         try (Connection conn = DBUtils.getConnection()) {
             users = new ArrayList<>();
@@ -228,6 +331,10 @@ public class UserController {
         }
     }
 
+    /**
+     * Edits User in database
+     * @param u 
+     */
     public void editToDb(User u) {
         try {
             String sql = "";
@@ -270,6 +377,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Edits user password by username 
+     * @param username
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmPassword 
+     */
     public void editUserPassword(String username, String oldPassword, String newPassword, String confirmPassword) {
         try (Connection conn = DBUtils.getConnection()) {
             getUsersFromDB();
@@ -298,6 +412,11 @@ public class UserController {
 
     }
 
+    /**
+     * Deletes user based on confirmation of user and password 
+     * @param username
+     * @param password 
+     */
     public void deleteUser(String username, String password) {
         try {
             for (User u : users) {

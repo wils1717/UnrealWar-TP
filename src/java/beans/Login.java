@@ -24,7 +24,7 @@ import javax.enterprise.context.SessionScoped;
 public class Login implements Serializable {
     
     /** 
-     * Create variables 
+     * Declare variables 
      */
     private String username;
     private String password;
