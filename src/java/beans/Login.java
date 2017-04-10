@@ -54,17 +54,6 @@ public class Login implements Serializable {
         return "loginPage";
     }
 
-    public String doLogin(String username, String password) {
-        String retVal = null;
-        if (username.equals("")) {
-            retVal = "ERROR: Invalid Username";
-        } else if (password.equals("")) {
-            retVal = "ERROR: Invalid Password";
-        }
-        System.out.println(retVal);
-        return retVal;
-    }
-
     public String getUsername() {
         return username;
     }
