@@ -282,10 +282,10 @@ public class UserController {
                             incorrectPassChange = false;
                             getUsersFromDB();
                         }
-                    }   
-                }
-                else {
+                    }
+                } else {
                     incorrectPassChange = true;
+                    passwordChanged = false;
                 }
             }
 
@@ -307,10 +307,9 @@ public class UserController {
                     deleted = true;
                     incorrectPassDelete = false;
                     getUsersFromDB();
-                }
-                else {
+                } else {
                     incorrectPassDelete = true;
-                }      
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);

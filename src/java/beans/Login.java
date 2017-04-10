@@ -19,11 +19,29 @@ public class Login implements Serializable {
     private String username;
     private String password;
     private boolean loggedIn;
+    private boolean validUser;
     private User currentUser;
     private List<User> users;
     private static User instance = new User();
 
-    public List<User> getUsers() {
+    public Login() {
+        username = null;
+        password = null;
+        loggedIn = false;
+        currentUser = null;
+        validUser = true;
+        getUsersFromDB();
+    }
+
+    public String logout() {
+        username = null;
+        password = null;
+        loggedIn = false;
+        validUser = true;
+        return "loginPage";
+    }
+
+        public List<User> getUsers() {
         return users;
     }
 
@@ -35,25 +53,18 @@ public class Login implements Serializable {
         return instance;
     }
 
+    public boolean isValidUser() {
+        return validUser;
+    }
+
+    public void setValidUser(boolean validPass) {
+        this.validUser = validPass;
+    }
+
     public static void setInstance(User instance) {
         Login.instance = instance;
     }
-
-    public Login() {
-        username = null;
-        password = null;
-        loggedIn = false;
-        currentUser = null;
-        getUsersFromDB();
-    }
-
-    public String logout() {
-        username = null;
-        password = null;
-        loggedIn = false;
-        return "loginPage";
-    }
-
+    
     public String getUsername() {
         return username;
     }
@@ -85,12 +96,18 @@ public class Login implements Serializable {
             if (username.equals(u.getUsername())
                     && passhash.equals(u.getPasshash())) {
                 loggedIn = true;
+                validUser = true;
                 currentUser = u;
                 return "game";
             }
+            else{
+                validUser = false;
+            }   
+        }
+        if (validUser){
+            logout();
         }
         currentUser = null;
-        logout();
         loggedIn = false;
         return "loginPage";
     }

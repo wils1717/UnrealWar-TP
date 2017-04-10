@@ -24,11 +24,7 @@
                 <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{userController.clearFields()}"/>
             </h:form>
         </c:if>
-        <c:if test="#{userController.incorrectPassDelete}">
-            <h1>Unreal War!</h1><br></br>
-            <h3>Sorry but the password provided does not match the password in our database</h3>
-        </c:if>
-        <c:if test="#{!userController.deleted}">
+        <c:if test="#{(!userController.deleted) and !userController.incorrectPassDelete}">
             <div class="container panel panel-default">
                 <div class="row">
                     <div class="forum-group col-lg-8 col-lg-offset-2">
@@ -48,6 +44,36 @@
                     </div>
                 </div>
            
+            <footer  class="text-center">
+                <div class="panel-footer row">
+                    <div class="col-xs-12">
+                        <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
+                    </div>
+                </div>
+
+            </footer>
+            </div>
+        </c:if>
+        <c:if test="#{(!userController.deleted) and userController.incorrectPassDelete}">
+            <div class="container panel panel-default">
+                <div class="row">
+                    <div class="forum-group col-lg-8 col-lg-offset-2">
+                        <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
+                        <div class="form-group">
+                            <h:form>
+                                <p> Delete Account</p>
+                                <p> Sorry but either the username or password are incorrect </p>
+                                <p>Please enter your username: <h:inputText value="#{userController.instance.username}"/></p>
+                                <p>Confirm your password: <h:inputSecret value="#{userController.instance.passhash}"/></p>
+                                <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{userController.deleteUser(userController.instance.username, userController.instance.passhash)}"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div> 
             <footer  class="text-center">
                 <div class="panel-footer row">
                     <div class="col-xs-12">
