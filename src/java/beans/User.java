@@ -12,14 +12,22 @@ import javax.json.JsonObject;
 public class User {
     
     /**
-     * 
+     * Create variables 
      */
     public int id;
     public String username;
     public String passhash;
     public int wins;
     public int losses;
-
+    
+    /**
+     * Class constructor
+     * @param id
+     * @param username
+     * @param passhash
+     * @param wins
+     * @param losses 
+     */
     public User(int id, String username, String passhash, int wins, int losses) {
         this.id = id;
         this.username = username;
@@ -31,6 +39,10 @@ public class User {
     User() {
     }
     
+    /**
+     * 
+     * @param json 
+     */
     public User(JsonObject json) {        
         id = json.getInt("id", 0);
         username = json.getString("username", "");
