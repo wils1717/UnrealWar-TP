@@ -38,6 +38,7 @@
                                 <p>Please enter your desired username: <h:inputText value="#{userController.instance.username}"/></p>
                                 <p>Enter a password: <h:inputSecret value="#{userController.instance.passhash}"/></p>
                                 <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{userController.addUser()}"/>
+                                <div class="divider" />
                                 <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                             </h:form>
                         </div>
@@ -49,14 +50,11 @@
                             <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
                         </div>
                     </div>
-
                 </footer>
             </div>
-
         </c:if> 
         <script src="js/jquery-3.2.0.min.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js"></script>
-
     </h:body>
 </html>
 
