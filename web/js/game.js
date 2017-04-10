@@ -240,15 +240,17 @@ function checkWin() {
     //if player is out of cards, computer wins
     if (playerHand.length == 0) {
         alert("Computer wins. :(");
-        var loses = +1;
+        var losses = -1;
         $.ajax({
-            type: "POST",
-            url: "/UnrealWar-TP/api/leaderboard",
+            method: "PUT",
+            url: "/UnrealWar-TP/r/users/" + CURRENT_USER_ID,
             data: JSON.stringify({score: losses}),
             dataType: 'json',
+            //fixed 415 error with contentType
+            contentType: 'application/json',
             success: function (response) {
                 console.log(response);
-                $('#result').html('The score returned by the server is: ' + response.takeScore);
+               
             }
 
         });
@@ -265,13 +267,14 @@ function checkWin() {
         alert("Player wins!! :D");
         var wins = +1;
         $.ajax({
-            type: "POST",
-            url: "/UnrealWar-TP/api/leaderboard",
+            method: "PUT",
+            url: "/UnrealWar-TP/r/users/" + CURRENT_USER_ID,
             data: JSON.stringify({score: wins}),
             dataType: 'json',
+            contentType: 'application/json',
             success: function (response) {
                 console.log(response);
-                $('#result').html('The score returned by the server is: ' + response.takeScore);
+               
             }
 
         });

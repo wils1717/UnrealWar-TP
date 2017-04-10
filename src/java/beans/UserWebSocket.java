@@ -25,6 +25,11 @@ public class UserWebSocket {
     @Inject
     UserController userController;
 
+    /**
+     * 
+     * @param user
+     * @param session 
+     */
     @OnMessage
     public void onUser(String user, Session session) {
         try {
