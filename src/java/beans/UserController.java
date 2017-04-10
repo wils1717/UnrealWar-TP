@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -26,7 +27,7 @@ public class UserController {
     private boolean incorrectPassDelete;
     private List<User> users;
     private User instance = new User();
-
+    
     public UserController() {
         instance = new User(0, "", "", 0, 0);
         newPassword = null;
@@ -294,6 +295,20 @@ public class UserController {
         }
 
     }
+    
+        public JsonObject updateScores(int id,int score){
+           
+        User u = getById(id);
+        if (score > 0){
+            u.setWins(u.getWins()+1);
+        }
+        else {
+            u.setLosses(u.getLosses()+1);
+        }
+        editToDb(u);
+        return u.toJson();
+    }
+
 
     public void deleteUser(String username, String password) {
         try {

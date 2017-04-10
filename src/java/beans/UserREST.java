@@ -42,9 +42,10 @@ public class UserREST {
     @Consumes("application/json")
     @Produces("application/json")
     public Response edit(@PathParam("id") int id, JsonObject json) {
-        JsonObject jsonWithId = userController.editJson(id, json);
-        if (jsonWithId != null) {
-            return Response.ok(jsonWithId).build();
+        JsonObject jsonUpdate = userController.updateScores(id,json.getInt("score"));
+//        JsonObject jsonWithId = userController.editJson(id, json);
+        if (jsonUpdate != null) {
+            return Response.ok(jsonUpdate).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
