@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet"/>
@@ -35,8 +36,21 @@
                     <div class="col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                         <div class="form-group">
                             <h:form>
-                                <p>Please enter your desired username: <h:inputText value="#{userController.instance.username}"/></p>
-                                <p>Enter a password: <h:inputSecret value="#{userController.instance.passhash}"/></p>
+                                <p><h1>Password Requirement:</h1></p>
+                                <p>Must contain at least 1 Letter</p>
+                                <p>Must contain at least 1 Number</p>
+                                <p>Cannot contain special characters such as ! or @</p>
+                                <p>Must be between 4-12 characters</p><br></br><br></br>
+                                <p>Enter desired username: 
+                                    <h:inputText id="username" required="true" requiredMessage="Username cannot be blank" value="#{userController.instance.username}">    
+                                        <h:message for="username" style="color: red;" />
+                                    </h:inputText>
+                                </p>
+                                <p>Enter a Password: 
+                                    <h:inputSecret id="password"  required="true" requiredMessage="Password cannot be blank" value="#{userController.instance.passhash}">
+                                        <h:message for="password" style="color:red" />
+                                    </h:inputSecret>
+                                </p>
                                 <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{userController.addUser()}"/>
                                 <div class="divider" />
                                 <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>

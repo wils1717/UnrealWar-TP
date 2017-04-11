@@ -35,9 +35,17 @@
                     <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                         <div class="form-group">
                             <h:form>
-                                <p> Delete Account</p>
-                                <p>Please enter your username: <h:inputText value="#{userController.instance.username}"/></p>
-                                <p>Confirm your password: <h:inputSecret value="#{userController.instance.passhash}"/></p>
+                                <p> Delete Account</p><br></br>
+                                <p>Please enter your username: 
+                                    <h:inputText id="username" required="true" requiredMessage="Please enter your username" value="#{userController.instance.username}">
+                                        <h:message for="username" style="color: red;" />
+                                    </h:inputText>
+                                </p>
+                                <p>Confirm your password: 
+                                    <h:inputSecret id="password"  required="true" requiredMessage="Please enter your password" value="#{userController.instance.passhash}">
+                                        <h:message for="password" style="color:red" />
+                                    </h:inputSecret>
+                                </p>
                                 <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{userController.deleteUser(userController.instance.username, userController.instance.passhash)}"/>
                                 <div class="divider" />
                                 <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
@@ -45,15 +53,15 @@
                         </div>
                     </div>
                 </div>
-           
-            <footer  class="text-center">
-                <div class="panel-footer row">
-                    <div class="col-xs-12">
-                        <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
-                    </div>
-                </div>
 
-            </footer>
+                <footer  class="text-center">
+                    <div class="panel-footer row">
+                        <div class="col-xs-12">
+                            <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
+                        </div>
+                    </div>
+
+                </footer>
             </div>
         </c:if>
         <c:if test="#{(!userController.deleted) and userController.incorrectPassDelete}">
@@ -67,10 +75,18 @@
                     <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                         <div class="form-group">
                             <h:form>
-                                <p> Delete Account</p>
+                                <p> Delete Account</p><br></br>
                                 <p> Sorry but either the username or password are incorrect </p>
-                                <p>Please enter your username: <h:inputText value="#{userController.instance.username}"/></p>
-                                <p>Confirm your password: <h:inputSecret value="#{userController.instance.passhash}"/></p>
+                                <p>Please enter your username: 
+                                    <h:inputText id="username" required="true" requiredMessage="Please enter a username" value="#{userController.instance.username}">
+                                        <h:message for="username" style="color: red;" />
+                                    </h:inputText>
+                                </p>
+                                <p>Confirm your password: 
+                                    <h:inputSecret id="password"  required="true" requiredMessage="Please enter your password" value="#{userController.instance.passhash}">
+                                        <h:message for="password" style="color:red" />
+                                    </h:inputSecret>
+                                </p>
                                 <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{userController.deleteUser(userController.instance.username, userController.instance.passhash)}"/>
                                 <div class="divider" />
                                 <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
@@ -78,14 +94,14 @@
                         </div>
                     </div>
                 </div> 
-            <footer  class="text-center">
-                <div class="panel-footer row">
-                    <div class="col-xs-12">
-                        <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
+                <footer  class="text-center">
+                    <div class="panel-footer row">
+                        <div class="col-xs-12">
+                            <p class="footer"> Copyright © Unreal War. All rights reserved.</p>
+                        </div>
                     </div>
-                </div>
 
-            </footer>
+                </footer>
             </div>
         </c:if>
         <script src="js/jquery-3.2.0.min.js" type="text/javascript"></script>
