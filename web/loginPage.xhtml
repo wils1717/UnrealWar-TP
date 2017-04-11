@@ -27,16 +27,8 @@
                     <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                         <div class="form-group">
                             <h:form style="inline">
-                                <p>Username: 
-                                    <h:inputText id="username" required="true" requiredMessage="Please enter your username"value="#{login.username}">
-                                    <h:message for="username" style="color: red;" />
-                                    </h:inputText>
-                                </p>
-                                <p>Password: 
-                                    <h:inputSecret id="password"  required="true" requiredMessage="Please enter your password" value="#{login.password}">
-                                        <h:message for="password" style="color:red" />
-                                    </h:inputSecret>
-                                </p>
+                                <p>Username: <h:inputText value="#{login.username}"/></p>
+                                <p>Password: <h:inputSecret value="#{login.password}"/></p>
                                 <h:commandButton value="Login" class="btn btn-lg raised" style="font-size:24px; margin-top: 10px;" action="#{login.login()}" />
                                 <div class="divider" />
                                 <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px; margin-top: 10px;" action="#{login.register()}"/>
