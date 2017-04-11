@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package beans;
 
 import java.io.Serializable;
@@ -19,6 +25,10 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
+/**
+ * 
+ * @author c0533886
+ */
 @Named
 @ApplicationScoped
 public class UserController implements Serializable {
@@ -33,6 +43,9 @@ public class UserController implements Serializable {
     private List<User> users;
     private User instance = new User();
 
+    /**
+     * constructor to set default values
+     */
     public UserController() {
         instance = new User(0, "", null, 0, 0);
         newPassword = null;
@@ -45,6 +58,10 @@ public class UserController implements Serializable {
         getUsersFromDB();
     }
 
+    /**
+     * Clears all boolean fields
+     * @return loginPage.xhtml
+     */
     public String clearFields() {
         newPassword = null;
         confirmPassword = null;
@@ -57,67 +74,147 @@ public class UserController implements Serializable {
         return "loginPage";
     }
 
+    /**
+     * 
+     * @return confrimPassword
+     */
     public String getConfirmPassword() {
         return confirmPassword;
     }
 
+    /**
+     * 
+     * @param confirmPassword 
+     */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
 
+    /**
+     * 
+     * @return newPassword
+     */
     public String getNewPassword() {
         return newPassword;
     }
 
+    /**
+     * 
+     * @param newPassword 
+     */
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
 
+    /**
+     * 
+     * @return incorrectPassChange
+     */
     public int isIncorrectPassChange() {
         return incorrectPassChange;
     }
 
+    /**
+     * 
+     * @param incorrectPassChange 
+     */
     public void setIncorrectPassChange(int incorrectPassChange) {
         this.incorrectPassChange = incorrectPassChange;
     }
 
+    /**
+     * 
+     * @return incorrectPassDelete
+     */
     public boolean isIncorrectPassDelete() {
         return incorrectPassDelete;
     }
 
+    /**
+     * 
+     * @param incorrectPassDelete 
+     */
     public void setIncorrectPassDelete(boolean incorrectPassDelete) {
         this.incorrectPassDelete = incorrectPassDelete;
     }
 
+    /**
+     * 
+     * @return passwordChanged
+     */
     public boolean isPasswordChanged() {
         return passwordChanged;
     }
 
+    /**
+     * 
+     * @param passwordChanged 
+     */
     public void setPasswordChanged(boolean passwordChanged) {
         this.passwordChanged = passwordChanged;
     }
 
+    /**
+     * 
+     * @return registered
+     */
     public boolean isRegistered() {
         return registered;
     }
 
+    /**
+     * 
+     * @param registered 
+     */
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
+    /**
+     * 
+     * @param deleted 
+     */
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    /**
+     * 
+     * @return deleted
+     */
     public boolean isDeleted() {
         return deleted;
     }
 
+    /**
+     * 
+     * @return users
+     */
     public List<User> getUsers() {
         users.sort(Comparator.comparing(User::getWins).reversed());
         return users;
     }
 
+    /**
+     * 
+     * @param users 
+     */
     public void setUsers(List<User> users) {
         this.users = users;
     }
 
+    /**
+     * 
+     * @return instance
+     */
     public User getInstance() {
         return instance;
     }
 
+    /**
+     * 
+     * @param instance 
+     */
     public void setInstance(User instance) {
         this.instance = instance;
     }
@@ -152,6 +249,10 @@ public class UserController implements Serializable {
         return -1;
     }
 
+    /**
+     * gets all users in the list by username for json builder
+     * @return 
+     */
     public JsonArray getAllJson() {
         JsonArrayBuilder json = Json.createArrayBuilder();
         for (User u : users) {
@@ -160,6 +261,11 @@ public class UserController implements Serializable {
         return json.build();
     }
 
+    /**
+     * gets a user in the list by id
+     * @param id
+     * @return either a User or null
+     */
     public User getById(int id) {
         for (User u : users) {
             if (u.getId() == id) {
@@ -169,6 +275,11 @@ public class UserController implements Serializable {
         return null;
     }
 
+    /**
+     * gets a user in the list by username
+     * @param username
+     * @return 
+     */
     public User getByUsername(String username) {
         for (User u : users) {
             if (u.getUsername() == username) {
@@ -178,6 +289,11 @@ public class UserController implements Serializable {
         return null;
     }
 
+    /**
+     * gets a user in the list by id for json
+     * @param id
+     * @return 
+     */
     public JsonObject getByIdJson(int id) {
         User u = getById(id);
         if (u != null) {
@@ -187,6 +303,11 @@ public class UserController implements Serializable {
         }
     }
 
+    /**
+     * gets a user in the list by username for json
+     * @param username
+     * @return 
+     */
     public JsonObject getByUsernameJson(String username) {
         User u = getByUsername(username);
         if (u != null) {
@@ -196,6 +317,12 @@ public class UserController implements Serializable {
         }
     }
 
+    /**
+     * edits a user in the list by id for json
+     * @param id
+     * @param json
+     * @return 
+     */
     public JsonObject editJson(int id, JsonObject json) {
         User u = getById(id);
         u.setUsername(json.getString("username", ""));
@@ -206,6 +333,9 @@ public class UserController implements Serializable {
         return u.toJson();
     }
 
+    /**
+     * Retrieves all users from the database and places them in an arrayList
+     */
     public void getUsersFromDB() {
         try (Connection conn = DBUtils.getConnection()) {
             users = new ArrayList<>();
@@ -228,6 +358,10 @@ public class UserController implements Serializable {
         }
     }
 
+    /**
+     * edit user method for json call when updating the score of a user
+     * @param u 
+     */
     public void editToDb(User u) {
         try {
             String sql = "";
@@ -249,8 +383,6 @@ public class UserController implements Serializable {
     /**
      * Add a user to the DB
      *
-     *
-     *
      */
     public void addUser() {
         try (Connection conn = DBUtils.getConnection()) {
@@ -271,6 +403,13 @@ public class UserController implements Serializable {
         }
     }
 
+    /**
+     * edits the password of a particular user if all requirements are met
+     * @param username
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmPassword 
+     */
     public void editUserPassword(String username, String oldPassword, String newPassword, String confirmPassword) {
         try (Connection conn = DBUtils.getConnection()) {
             getUsersFromDB();
@@ -302,6 +441,12 @@ public class UserController implements Serializable {
 
     }
 
+    /**
+     * used for updating the scores from in game calls
+     * @param id
+     * @param score
+     * @return 
+     */
     public JsonObject updateScores(int id, int score) {
 
         User u = getById(id);
@@ -314,6 +459,11 @@ public class UserController implements Serializable {
         return u.toJson();
     }
 
+    /**
+     * Delete a user if credentials match the given fields of a user within the list
+     * @param username
+     * @param password 
+     */
     public void deleteUser(String username, String password) {
         try {
             for (User u : users) {
@@ -335,6 +485,11 @@ public class UserController implements Serializable {
         }
     }
 
+    /**
+     * Used for changing passwords
+     * Checker for form validation on passwords
+     * @param event 
+     */
     public void validatePassword(ComponentSystemEvent event) {
 
         FacesContext fc = FacesContext.getCurrentInstance();

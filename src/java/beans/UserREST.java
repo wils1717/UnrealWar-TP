@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package beans;
 
@@ -12,6 +17,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+/**
+ * 
+ * @author c0533886
+ */
 @Path("/users")
 @ApplicationScoped
 public class UserREST {
@@ -19,12 +28,21 @@ public class UserREST {
     @Inject
     private UserController userController;
 
+    /**
+     * 
+     * @return 
+     */
     @GET
     @Produces("application/json")
     public Response getAll() {
         return Response.ok(userController.getAllJson()).build();
     }
     
+    /**
+     * 
+     * @param username
+     * @return 
+     */
     @GET
     @Path("{username}")
     @Produces("application/json")
@@ -37,6 +55,12 @@ public class UserREST {
         }
     }
 
+    /**
+     * 
+     * @param id
+     * @param json
+     * @return 
+     */
     @PUT
     @Path("{id}")
     @Consumes("application/json")

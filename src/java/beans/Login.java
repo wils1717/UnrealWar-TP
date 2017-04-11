@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package beans;
 
 import java.io.Serializable;
@@ -11,12 +17,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 
+/**
+ *
+ * @author c0533886
+ */
 @Named
 @SessionScoped
 public class Login implements Serializable {
@@ -27,7 +32,6 @@ public class Login implements Serializable {
     private boolean validUser;
     private User currentUser;
     private List<User> users;
-    private static User instance = new User();
 
     public Login() {
         username = null;
@@ -38,6 +42,10 @@ public class Login implements Serializable {
         getUsersFromDB();
     }
 
+    /**
+     *
+     * @return
+     */
     public String logout() {
         username = null;
         password = null;
@@ -46,6 +54,10 @@ public class Login implements Serializable {
         return "loginPage";
     }
 
+    /**
+     *
+     * @return
+     */
     public String changePass() {
         username = null;
         password = null;
@@ -54,6 +66,10 @@ public class Login implements Serializable {
         return "changePassPage";
     }
 
+    /**
+     *
+     * @return
+     */
     public String deleteUser() {
         username = null;
         password = null;
@@ -62,6 +78,10 @@ public class Login implements Serializable {
         return "deleteUserPage";
     }
 
+    /**
+     *
+     * @return
+     */
     public String register() {
         username = null;
         password = null;
@@ -70,6 +90,10 @@ public class Login implements Serializable {
         return "registrationPage";
     }
 
+    /**
+     *
+     * @return
+     */
     public String leaderboard() {
         username = null;
         password = null;
@@ -78,54 +102,108 @@ public class Login implements Serializable {
         return "leaderboardsPage";
     }
 
+    /**
+     *
+     * @return
+     */
     public List<User> getUsers() {
         return users;
     }
 
+    /**
+     *
+     * @param users
+     */
     public void setUsers(List<User> users) {
         this.users = users;
     }
 
-    public static User getInstance() {
-        return instance;
+    /**
+     *
+     * @param currentUser
+     */
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
-    public boolean isValidUser() {
-        return validUser;
-    }
-
-    public void setValidUser(boolean validPass) {
-        this.validUser = validPass;
-    }
-
-    public static void setInstance(User instance) {
-        Login.instance = instance;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
+    /**
+     *
+     * @return currentUser
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     *
+     * @return validUser
+     */
+    public boolean isValidUser() {
+        return validUser;
+    }
+
+    /**
+     *
+     * @param validPass
+     */
+    public void setValidUser(boolean validPass) {
+        this.validUser = validPass;
+    }
+
+    /**
+     *
+     * @return loggedIn
+     */
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    /**
+     *
+     * @param loggedIn
+     */
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    /**
+     *
+     * @return username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     *
+     * @param username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     *
+     * @return password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     *
+     * @param password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * Sorts through the array list for credentials received if match then user
+     * logs in
+     *
+     * @return either game.xhtml or loginPage.xhtml
+     */
     public String login() {
         getUsersFromDB();
         String passhash = DBUtils.hash(password);
@@ -144,6 +222,10 @@ public class Login implements Serializable {
         return "loginPage";
     }
 
+    /**
+     * Fetches all users from the database into an array list used for logging
+     * in
+     */
     public void getUsersFromDB() {
         try (Connection conn = DBUtils.getConnection()) {
             users = new ArrayList<>();
