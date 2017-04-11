@@ -9,10 +9,17 @@ package beans;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
-
+/**
+ * 
+ * @author c0533886
+ */
 @javax.ws.rs.ApplicationPath("r")
 public class ApplicationConfig extends Application {
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();

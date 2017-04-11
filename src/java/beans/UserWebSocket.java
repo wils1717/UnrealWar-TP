@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package beans;
 
@@ -13,6 +18,10 @@ import javax.websocket.OnMessage;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+/**
+ * 
+ * @author c0533886
+ */
 @ServerEndpoint("/socket")
 @ApplicationScoped
 public class UserWebSocket {
@@ -20,6 +29,11 @@ public class UserWebSocket {
     @Inject
     UserController userController;
 
+    /**
+     * 
+     * @param user
+     * @param session 
+     */
     @OnMessage
     public void onUser(String user, Session session) {
         try {

@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package beans;
 
 import java.io.UnsupportedEncodingException;
@@ -12,10 +13,14 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 
+ * @author c0533886
+ */
 public class DBUtils {
     
     private final static String studentNumber = "c0533886";
-    public final static String SALT = "THISISArandomSTRINGofCHARACTERSusedTOsaltTHEpasswords";
+    public final static String SALT = "WelComeTOgameOFwArTheGameOfaLLgAmesPERIOD";
 
     /**
      * Salts and hashes a password for semi-secure storage
