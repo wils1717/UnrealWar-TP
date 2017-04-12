@@ -46,9 +46,9 @@
                                         <h:message for="password" style="color:red" />
                                     </h:inputSecret>
                                 </p>
-                                <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{userController.deleteUser(userController.instance.username, userController.instance.passhash)}"/>
+                                <h:commandButton value="Delete" class="btn btn-lg raised" style="font-size:24px" action="#{userController.deleteUser(userController.instance.username, userController.instance.passhash)}"/>
                                 <div class="divider" />
-                                <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+                                <h:button value="Cancel" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                             </h:form>
                         </div>
                     </div>
