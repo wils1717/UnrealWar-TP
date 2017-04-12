@@ -3,10 +3,7 @@ body {
     background: url("../img/splatterBack.jpg");
     background-size: cover;
 }
-img{
-    height: 300px;
-    width: 300px;
-}
+
 .divider {
     width: 5px;
     height:auto;
@@ -24,6 +21,9 @@ input[type=text], input[type=password] {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+form {
+    vertical-align: top;
+}
 
 /* Set a style for all buttons */
 button {
@@ -35,11 +35,19 @@ button {
     cursor: pointer;
     width: 100%;
     font-family: 'Permanent Marker', cursive;
+    
 }
 
 .btn.raised {
     box-shadow: 3px 3px 3px 3px #3D0305;
-
+color: white; 
+width: 200px; 
+height: 60px; 
+font-size: 30px;  
+font-family: 'Permanent Marker', cursive; 
+cursor: pointer; 
+margin: 10px auto;
+background-color: #860509;
 
 }
 
@@ -80,12 +88,14 @@ button {
     font-family: 'Permanent Marker', cursive;
     font-size: 14px;
 }
-
+#boxing {
+    box-shadow: 10px 10px 5px 5px #888888;
+}
 /* Avatar image */
-img.avatar {
+/* img.avatar {
     width: 40%;
     border-radius: 50%;
-}
+} */
 
 /* Add padding to containers */
 .container {
@@ -96,6 +106,29 @@ img.avatar {
 span.psw {
     float: right;
     padding-top: 16px;
+}
+
+/* styles for the leaderboard table */
+.leaderTable {   
+   border-collapse:collapse;
+   border:1px solid #000000;
+}
+
+.leaderTableHeader {
+   text-align:center;
+   background:none repeat scroll 0 0 #B5B5B5;
+   border-bottom:1px solid #000000;  
+   padding:2px;
+}
+
+.leaderTableOddRow {
+   text-align:center;
+   background:none repeat scroll 0 0 #FFFFFFF;	
+}
+
+.leaderTableEvenRow {
+   text-align:center;
+   background:none repeat scroll 0 0 #D3D3D3;
 }
 
 <!-- /* Change styles for span and cancel button on extra small screens */

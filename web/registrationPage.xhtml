@@ -36,12 +36,16 @@
                     <div class="col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                         <div class="form-group">
                             <h:form>
+                                <div id="boxing">
                                 <p><h1>Password Requirement:</h1></p>
                                 <p>Must contain at least 1 Letter</p>
                                 <p>Must contain at least 1 Number</p>
                                 <p>Cannot contain special characters such as ! or @</p>
-                                <p>Must be between 4-12 characters</p><br></br><br></br>
-                                <p>Enter desired username: 
+                                <p>Must be between 4-12 characters</p>
+                                </div>
+                                <br></br>
+                                
+                                <p style="display: inline-block;">Enter desired username: 
                                     <h:inputText id="username" required="true" requiredMessage="Username cannot be blank" value="#{userController.instance.username}">    
                                         <h:message for="username" style="color: red;" />
                                     </h:inputText>
@@ -53,7 +57,7 @@
                                 </p>
                                 <h:commandButton value="Register" class="btn btn-lg raised" style="font-size:24px" action="#{userController.addUser()}"/>
                                 <div class="divider" />
-                                <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+                                <h:button value="Cancel" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                             </h:form>
                         </div>
                     </div>
