@@ -21,7 +21,7 @@
             <h1>Unreal War</h1><br></br>
             <h3>We are sorry to see you go</h3>
             <h:form>
-                <h:commandButton value="Return to login page" class="btn btn-lg raised" style="font-size:24px" action="#{userController.clearFields()}"/>
+                <h:commandButton value="Return" class="btn btn-lg raised" style="font-size:24px" action="#{userController.clearFields()}"/>
             </h:form>
         </c:if>
         <c:if test="#{(!userController.deleted) and !userController.incorrectPassDelete}">
@@ -89,7 +89,7 @@
                                 </p>
                                 <h:commandButton value="Delete User" class="btn btn-lg raised" style="font-size:24px" action="#{userController.deleteUser(userController.instance.username, userController.instance.passhash)}"/>
                                 <div class="divider" />
-                                <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+                                <h:button value="Return" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
                             </h:form>
                         </div>
                     </div>
