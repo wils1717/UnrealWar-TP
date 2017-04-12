@@ -388,15 +388,9 @@ public class UserController implements Serializable {
         try (Connection conn = DBUtils.getConnection()) {
             getUsersFromDB();
             if (!instance.username.isEmpty() && instance.passhash.matches("^.*(?=.{4,12})(?=.*\\d)(?=.*[a-zA-Z]).*$")) {
-                int counter = 1;
                 Statement stmt = conn.createStatement();
-                for (User u : users) {
-                    counter++;
-                }
-                instance.id = counter;
                 stmt.executeUpdate("INSERT INTO users VALUES (" + instance.id + ",'" + instance.username + "','" + DBUtils.hash(instance.passhash) + "', " + instance.wins + ", " + instance.losses + ")");
                 registered = true;
-                System.out.println(counter);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
