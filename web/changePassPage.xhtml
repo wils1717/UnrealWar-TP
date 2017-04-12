@@ -48,7 +48,6 @@
                                         <h:message for="oldPassword" style="color:red" />
                                     </h:inputSecret>
                                 </p>                             
-                                <f:event listener="#{userController.validatePassword}" type="postValidate" />  
                                 <p>New Password: 
                                     <h:inputSecret id="newPassword"  required="true" requiredMessage="Please enter your new password" value="#{userController.newPassword}">
                                         <h:message for="newPassword" style="color:red" />
@@ -101,7 +100,6 @@
                                         <h:message for="oldPassword" style="color:red" />
                                     </h:inputSecret>
                                 </p>                             
-                                <f:event listener="#{userController.validatePassword}" type="postValidate" />  
                                 <p>New Password: 
                                     <h:inputSecret id="newPassword"  required="true" requiredMessage="Please enter your new password" value="#{userController.newPassword}">
                                         <h:message for="newPassword" style="color:red" />

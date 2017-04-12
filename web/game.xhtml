@@ -71,7 +71,7 @@
 
                     <h1>Unreal War!</h1><br></br>
                     <p>You Are Not Logged in. Therefore you cannot play. Please return to login page in order to play</p>
-                    <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+                    <h:button value="Return" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
 
                 </div>
             </div>
@@ -99,7 +99,9 @@
                     <div><button onclick="play()">PLAY!</button></div>
 
                     <h:form>
-                        <h:commandButton value="Leaderboard" styleClass="richButton"  action="#{login.leaderboard()}"/>
+                    <div><a href="leaderboardsPage.xhtml" target="_blank">
+                            <input id="chatBut" type="button" class="button" value="Leaderboards" />
+                        </a></div>
                         <div class="divider" />
                         <h:commandButton value="Logout" styleClass="richButton" action="#{login.logout()}"/>
                     </h:form>
