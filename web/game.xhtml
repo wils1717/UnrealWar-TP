@@ -8,15 +8,24 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>Unreal War</title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap.css"/>
+        <link rel="stylesheet" href="css/styles.css"/>
         <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet"/>
+
         <style>
             <!--
             @font-face {font-family: 'Permanent Marker', cursive;}
 
             body {background: url("img/splatterBack.jpg"); background-size: cover; text-align: center; margin: 0; font-family: 'Permanent Marker', cursive; color: #fff;}
             header {color: white; padding: 20px 0 40px 0;}
-            button {color: #222; width: 162px; height: 70px; border: 2px solid #222; font-size: 30px; font-family: 'Permanent Marker', cursive; cursor: pointer; margin: 10px auto; box-shadow: 3px 3px 3px #222;}
-            button:hover {background-color: #ccc;}
+            button {color: white; width: 162px; height: 60px; border: 2px solid #222; font-size: 30px;  font-family: 'Permanent Marker', cursive; cursor: pointer; margin: 10px auto; box-shadow: 3px 3px 3px #222;}
+            .richButton 
+            {color: #222; width: 200px; height: 60px; border: 2px solid #222; font-size: 30px; font-family: 'Permanent Marker', cursive; cursor: pointer; margin: 10px auto; box-shadow: 3px 3px 3px #222;}
+            .richButton:hover {background-color: #860509;}
+            #chatBut {color: #222; width: 200px; height: 60px; border: 2px solid #222; font-size: 30px; font-family: 'Permanent Marker', cursive; cursor: pointer; margin: 10px auto; box-shadow: 3px 3px 3px #222;}
+           #chatbut:hover {background-color: #860509;}
+            button:hover {background-color: #ccc; color:black;}
             h1 {font-size: 100px; font-family: 'Permanent Marker', cursive; padding: 0; margin: 0 0 20px 0; font-weight: bolder;}
             h2 {font-size: 40px; }
             h3 {font-size: 50px; font-family: 'Permanent Marker', cursive; padding: 0; margin: 0;}
@@ -24,7 +33,7 @@
 
             #boardwrap {width: 90%; margin: auto; padding: 30px 0;}
 
-            #howTo div {margin: 40px; width: 80%; max-width: 500px; font-size: 30px; display: inline-block; vertical-align: top; text-align: justify;}
+            #howTo div {margin: 40px; width: 80%; max-width: 500px; font-size: 24px; display: inline-block; vertical-align: top; text-align: justify;}
 
             #warAnimation {left: 40%; top: 20%; font-family: 'Permanent Marker', cursive; display: none; position: absolute; overflow: hidden;}
             .war {animation: war 2s infinite;}
@@ -49,7 +58,7 @@
             .gameTable div {max-width: 45%; width: 250px; display: inline-block; vertical-align: middle;}
             -->
         </style>
-        
+
         <script src="js/jquery-3.2.0.min.js"></script>
         <script src="js/game.js"></script>
     </head>
@@ -57,17 +66,25 @@
     <body>
 
         <c:if test="#{!login.loggedIn}">
-            <h1>Unreal War!</h1><br></br>
-            <h3>You Are Not Logged in. Therefore you cannot play. Please return to login page in order to play</h3>
-            <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+            <div class="container panel panel-default">
+                <div class="row">
+
+                    <h1>Unreal War!</h1><br></br>
+                    <p>You Are Not Logged in. Therefore you cannot play. Please return to login page in order to play</p>
+                    <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+
+                </div>
+            </div>
         </c:if>
         <c:if test="#{login.loggedIn}">
             <script>
                 var CURRENT_USER_ID = #{login.currentUser.id};
             </script>
+
+
             <header>
                 <h1>Unreal War!</h1>
-                <h3>The fun friendly game for the whole family</h3>
+                <p style="font-size:24px;">The fun friendly game for the whole family</p>
             </header>
             <div id="boardwrap">
 
@@ -80,8 +97,11 @@
                     </div>
 
                     <div><button onclick="play()">PLAY!</button></div>
+
                     <h:form>
-                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                        <h:commandButton value="Leaderboard" styleClass="richButton"  action="#{login.leaderboard()}"/>
+                        <div class="divider" />
+                        <h:commandButton value="Logout" styleClass="richButton" action="#{login.logout()}"/>
                     </h:form>
                 </div>
 
@@ -101,9 +121,13 @@
                         <div class="compCard"></div>
                         <div class="compDeck"><img src="img/cards/cardback.jpg"/></div>
                     </div>
+                    <div><a href="http://www.swimmingwithcode.com/projects/UnrealWarChat/login.html" target="_blank">
+                            <input id="chatBut" type="button" class="button" value="Join Chat!" />
+                        </a></div>
                     <h:form>
-                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                        <h:commandButton value="Logout"  styleClass="richButton" action="#{login.logout()}"/>
                     </h:form>
+                    
                 </div>
 
                 <div id='mobile' class="game">
@@ -118,10 +142,17 @@
                     <div class="compDeck"><img src="img/cards/cardback.jpg"/></div>
                     <div class="compCard"></div>
                     <h:form>
-                        <h:commandButton value="Logout" class="btn btn-lg raised" style="font-size:24px" action="#{login.logout()}"/>
+                        <h:commandButton value="Logout" styleClass="richButton" action="#{login.logout()}"/>
                     </h:form>
+                    <div><a href="http://www.swimmingwithcode.com/projects/UnrealWarChat/login.html" target="_blank">
+                            <input type="button" class="button" value="Join Chat!" />
+                        </a></div>
                 </div>
             </div>
+
+
+
+
         </c:if>
         <div>
             <footer id="foot" class="text-center">

@@ -5,18 +5,18 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'/>
+        <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <!-- Bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.css"/>
         <link rel="stylesheet" href="css/styles.css"/>
-        <link href="https://fonts.googleapis.com/css?family=Creepster|VT323" rel="stylesheet"/>
+        
         <title>Leaderboard Page</title>
     </h:head>
     <h:body>
         <div class="container panel panel-default">
             <div class="row">
-                <div class="forum-group col-lg-8 col-lg-offset-2">
+                <div class="col-lg-8 col-lg-offset-2">
                     <img class="img-responsive center-block" src="img/logo.png" alt="CompanyLogo"></img>
                 </div>
             </div>
@@ -24,13 +24,15 @@
                 <div class=" col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                     <div class="form-group">
                         <h:form>
-                            <h:dataTable value="#{userController.users}" var="users">
+                            <h:dataTable value="#{userController.users}" var="users" styleClass="leaderTable"
+                                         headerClass="leaderTableHeader"
+                                         rowClasses="leaderTableOddRow,leaderTableEvenRow">
                                 <h:column>
-                                    <f:facet name="header"><h2>Username</h2></f:facet>
+                                    <f:facet name="header"><h2>Player |</h2></f:facet>
                                     #{users.username}
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h2>Wins</h2></f:facet>
+                                    <f:facet name="header"><h2>Wins |</h2></f:facet>
                                     #{users.wins}
                                 </h:column>
                                 <h:column>
@@ -38,7 +40,8 @@
                                     #{users.losses}
                                 </h:column>
                             </h:dataTable>
-                            <h:button value="Return to login page" class="btn btn-lg raised" style="font-size:24px" outcome="loginPage"/>
+                           
+                            <h:button value="Return" class="btn btn-lg raised" style="font-size:24px; margin-top:25px" outcome="loginPage"/>
                         </h:form>
                     </div>
                 </div>
